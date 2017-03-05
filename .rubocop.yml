@@ -1,27 +1,21 @@
-Bundle/OrderedGems:
-  Exclude:
-    - 'Gemfile'
-
 AllCops:
   Exclude:
-    - "bin/**/*"
-    - "db/schema.rb"
+    - 'bin/**/*'
+    - 'db/schema.rb'
+    - 'Gemfile'
 
 Metrics/LineLength:
   Max: 120
+
+Metrics/MethodLength:
+  Max: 20
 
 Style/ClassAndModuleChildren:
   Exclude:
     - 'test/test_helper.rb'
 
 Style/Documentation:
-  Exclude:
-    - 'spec/**/*'
-    - 'test/**/*'
-    - 'app/controllers/application_controller.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'app/mailers/application_mailer.rb'
-    - 'app/models/application_record.rb'
+  Enabled: false
 
 Style/EmptyLines:
   Exclude:
@@ -37,3 +31,6 @@ Style/StringLiterals:
     - 'bin/spring'
     - 'config/environments/production.rb'
     - 'config/puma.rb'
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
