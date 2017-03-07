@@ -3,6 +3,8 @@ AllCops:
     - 'bin/**/*'
     - 'db/schema.rb'
     - 'Gemfile'
+    - 'Guardfile'
+    - 'spec/**/*'
 
 Metrics/LineLength:
   Max: 120
@@ -17,17 +19,12 @@ Style/ClassAndModuleChildren:
 Style/Documentation:
   Enabled: false
 
-Style/EmptyLines:
-  Exclude:
-    - 'Gemfile'
-
 Style/SpaceInsideBrackets:
   Exclude:
     - 'config/environments/production.rb'
 
 Style/StringLiterals:
   Exclude:
-    - 'Gemfile'
     - 'bin/spring'
     - 'config/environments/production.rb'
     - 'config/puma.rb'
