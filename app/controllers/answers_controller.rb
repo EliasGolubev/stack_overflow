@@ -1,6 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :load_answer,   only: [:edit, :update]
-  before_action :load_question, only: [:create]
+  before_action :load_answer,   only: [:edit, :update, :destroy]
 
   def new 
     @answer = Answer.new
@@ -9,6 +8,7 @@ class AnswersController < ApplicationController
   def edit; end
 
   def create
+    @question = Question.find(params[:question_id])
     @answer = @question.answers.build(answer_params)
     if @answer.save
       puts 'Save ok'
@@ -26,11 +26,13 @@ class AnswersController < ApplicationController
     end
   end
 
-  private
-
-  def load_question
-    @question = Question.find(params[:question_id])
+  def destroy
+    @question = @answer.question
+    @answer.destroy
+    redirect_to @question
   end
+
+  private
 
   def load_answer
     @answer = Answer.find(params[:id])
