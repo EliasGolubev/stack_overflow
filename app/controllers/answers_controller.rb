@@ -11,7 +11,6 @@ class AnswersController < ApplicationController
     @question = Question.find(params[:question_id])
     @answer = @question.answers.build(answer_params)
     if @answer.save
-      puts 'Save ok'
       redirect_to @question
     else
       render :new
