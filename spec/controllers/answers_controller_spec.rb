@@ -23,7 +23,7 @@ RSpec.describe AnswersController, type: :controller do
     it 'assings the requsted answer to @answer' do 
       expect(assigns(:answer)).to eq answer
     end
-    
+
     it 'renders edit view' do 
       expect(response).to render_template :edit
     end
