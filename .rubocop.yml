@@ -5,6 +5,7 @@ AllCops:
     - 'Gemfile'
     - 'Guardfile'
     - 'spec/**/*'
+    - 'config/initializers/*'
 
 Metrics/LineLength:
   Max: 120

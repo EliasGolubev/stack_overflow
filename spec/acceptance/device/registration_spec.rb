@@ -6,36 +6,91 @@ feature 'User registration', %q{
   I want to be able to registration
 } do 
 
-  scenario 'some description User fill all registration field' do
+  scenario 'User fill all registration field' do
+    registration_user
+
+    expect(page).to have_content('Welcome! You have signed up successfully.')
+    expect(current_path).to eq root_path
   end
 
-  scenario 'some description User not fill username' do 
+  scenario 'User not fill username' do
+    registration_user(username: nil)
+
+    expect(page).to have_content('Username can\'t be blank')
+    expect(current_path).to eq user_registration_path
   end
 
-  scenario 'some description User not fill email' do 
+  scenario 'User not fill email' do
+    registration_user(email: nil)
+
+    expect(page).to have_content('Email can\'t be blank')
+    expect(current_path).to eq user_registration_path
   end
 
-  scenario 'some description User not fill password' do 
+  scenario 'User not fill password' do
+    registration_user(password: nil)
+    
+    expect(page).to have_content('Password can\'t be blank')
+    expect(page).to have_content('Password confirmation doesn\'t match Password')
+    expect(current_path).to eq user_registration_path
   end
 
-  scenario 'some description User not fill conf password' do 
+  scenario 'User not fill conf password' do
+    registration_user(password_confirmation: nil)
+    
+    expect(page).to have_content('Password confirmation doesn\'t match Password')
+    expect(current_path).to eq user_registration_path
   end
 
-  scenario 'some description User fill email already exist' do 
+  scenario 'User fill email already exist' do
+    user = create(:user)
+
+    registration_user(username:              user.username,
+                      email:                 user.email,
+                      password:              user.password,
+                      password_confirmation: user.password_confirmation)    
+
+    expect(page).to have_content('Email has already been taken')
+    expect(current_path).to eq user_registration_path
   end
 
-  scenario 'some description User password less six symbol' do 
+  scenario 'User password less six symbol' do
+    registration_user(password: '123', password_confirmation: '123')
+
+    expect(page).to have_content('Password is too short (minimum is 6 characters)')
+    expect(current_path).to eq user_registration_path
   end
 
-  scenario 'some description No logged user can see button Sign up on root page' do 
+  scenario 'No logged user can see button Sign up on root page' do
+     visit root_path
+
+     expect(page).to have_content('Sign up')
   end
 
-  scenario 'some description No logged user can see button Sign up on question page' do
+  scenario 'No logged user can see button Sign up on question page' do
+    question = create(:question)
+
+    visit question_path(question)
+
+    expect(page).to have_content('Sign up')
   end
 
-  scenario 'some description Logged user can not see button Sign up on root page' do 
+  scenario 'Logged user can not see button Sign up on root page' do 
+    user = create(:user)
+
+    sign_in(user)
+    visit root_path
+
+    expect(page).to_not have_content('Sign up')
   end
 
-  scenario 'some description Logged user can not see button Sign up on question page' do 
+  scenario 'Logged user can not see button Sign up on question page' do 
+    question = create(:question)
+    user = create(:user)
+
+    sign_in(user)
+    visit root_path
+
+    expect(page).to_not have_content('Sign up')
   end
 end
