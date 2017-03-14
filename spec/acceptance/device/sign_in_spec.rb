@@ -6,27 +6,62 @@ feature 'User sign in', %q{
   I want to be able to sign in
 } do 
 
-  scenario 'some description Registered user can sign in' do 
+  given(:user) { create :user }
+
+  scenario 'Registered user can sign in' do
+    sign_in(user)
+
+    expect(page).to have_content 'Signed in successfully'
+    expect(current_path).to eq root_path
   end
 
-  scenario 'some description Registered user not fill email field' do 
+  scenario 'Registered user not fill email field' do
+    visit new_user_session_path
+    fill_in 'Password', with: user.password
+    click_on 'Log in'
+
+    expect(page).to have_content('Invalid Email or password.')
+    expect(current_path).to eq new_user_session_path
   end
 
-  scenario 'some description Unregistered user can not sign in' do 
+  scenario 'Unregistered user can not sign in' do
+    visit new_user_session_path
+    fill_in 'Email',      with: Faker::Internet.email
+    fill_in 'Password',   with: Faker::Internet.password
+    click_on 'Log in'
+
+    expect(page).to have_content('Invalid Email or password.')
+    expect(current_path).to eq new_user_session_path
   end
 
-  scenario 'some description No logged user can see Sign in button on root page' do 
+  scenario 'No logged user can see Sign in button on root page' do 
+    visit root_path
+
+    expect(page).to have_content('Sign in')
   end
 
-  scenario 'some description No logged user can see Sign in button on question page' do 
+  scenario 'No logged user can see Sign in button on question page' do
+    question = create(:question)
+    
+    visit question_path(question)
+
+    expect(page).to have_content('Sign in') 
   end
 
-  scenario 'some description No logged user can see Sign in button on my_question page' do 
+  scenario 'Logged user can not see Sign in button on root page' do 
+    
+    sign_in(user)
+    visit root_path
+
+    expect(page).to_not have_content('Sign in')
   end
 
-  scenario 'some description Logged user can not see Sign in button on root page' do 
-  end
+  scenario 'Logged user can not see Sign in button on question page' do
+    question = create(:question)
 
-  scenario 'some description Logged user can not see Sign in button on question page' do 
+    sign_in(user)
+    visit question_path(question)
+
+    expect(page).to_not have_content('Sign in')
   end
 end

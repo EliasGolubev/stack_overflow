@@ -6,7 +6,7 @@ feature 'User registration', %q{
   I want to be able to registration
 } do 
 
-  scenario 'some description User fill all registration field' do 
+  scenario 'some description User fill all registration field' do
   end
 
   scenario 'some description User not fill username' do 
