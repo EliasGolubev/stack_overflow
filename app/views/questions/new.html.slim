@@ -1,0 +1,14 @@
+=form_for @question do |f|
+  
+  = render 'common/errors', resources: @question
+
+  .form-group
+    =f.label :title
+    =f.text_field :title, class: "form-control"
+
+  .form-group
+    =f.label :body, 'Question text'
+    =f.text_area :body, class: "form-control"
+
+  .actions
+    =f.submit 'Ask question', class: 'btn btn-success'
