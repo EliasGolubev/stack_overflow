@@ -24,6 +24,7 @@ feature 'User create question', %q{
 
     expect(page).to have_content('Title')
     expect(page).to have_content('Question text')
+    expect(page).to have_button('Ask question')
     expect(current_path).to eq new_question_path
   end 
 
@@ -32,13 +33,10 @@ feature 'User create question', %q{
     sign_in(user)
 
     visit new_question_path
-
-    fill_in 'Title',          with: 'Title question'
-    fill_in 'Question text',  with: 'Text text text'
-    click_on 'Ask question'
-
-    expect(page).to have_content('Title question')
-    expect(page).to have_content('Text text text')
+    question_form
+    
+    expect(page).to have_content('Question title text')
+    expect(page).to have_content('Question body text')
   end
 
   scenario 'Logged user not fill title question' do
@@ -46,10 +44,7 @@ feature 'User create question', %q{
     sign_in(user)
 
     visit new_question_path
-
-    fill_in 'Title',          with: nil
-    fill_in 'Question text',  with: 'Text text text'
-    click_on 'Ask question'
+    question_form(title: nil)
 
     expect(page).to have_content('Title can\'t be blank')
   end
@@ -59,10 +54,7 @@ feature 'User create question', %q{
     sign_in(user)
 
     visit new_question_path
-
-    fill_in 'Title',          with: 'Text text text'
-    fill_in 'Question text',  with: nil
-    click_on 'Ask question'
+    question_form(body: nil)
 
     expect(page).to have_content('Body can\'t be blank')
   end
