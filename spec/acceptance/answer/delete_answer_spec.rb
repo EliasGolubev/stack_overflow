@@ -23,10 +23,14 @@ feature 'Destroy answer', %q{
 
   scenario 'Sign in user can\'t delete someone else\'s question' do
     sign_in(user)
+    
+    visit(question_path(question))
+    fill_in 'Ask Answer', with: 'answer text'
+    click_on 'Ask'
+    click_on 'Sign out'
     visit(question_path(question))
 
-    expect(page).to have_content(question.title)
-    expect(page).to have_content(question.body)
+    expect(page).to have_content('answer text')
     expect(page).to_not have_content('Delete')
   end
 end
