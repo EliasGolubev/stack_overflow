@@ -8,7 +8,7 @@
 
   .form-group
     =f.label :body, 'Question text'
-    =f.text_area :body, class: "form-control"
+    =f.text_area :body, class: "form-control", rows: 15
 
   .actions
-    =f.submit question.new_record? ? 'Ask question': 'Edit question', class: 'btn btn-success'
+    =f.submit question.new_record? ? 'Ask question': 'Edit question', class: 'btn btn-default'
