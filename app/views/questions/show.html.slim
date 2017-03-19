@@ -1,0 +1,39 @@
+.row
+  .col-xs-12.col-sm-8
+    .row
+      .panel.panel-default
+        .panel-heading
+          h4 = @question.title
+        .panel-body
+          .col-xs-12.col-md-11
+            = @question.body
+          .col-xs-2.col-md-1
+            - if current_user && @question.user_id == current_user.id
+              .col-xs-2.col-md-1
+                = link_to 'Edit', edit_question_path(@question)
+              .col-xs-2.col-md-1  
+                = link_to 'Delete', @question, method: :delete
+.row
+  -@question.answers.each do |answer|
+    -if !answer.id.nil?
+      .col-xs-12.col-sm-8
+        .row
+          .panel.panel-primary
+            .panel-body
+              .col-xs-12.col-md-11
+                =answer.body
+              - if current_user && answer.user_id == current_user.id
+                .col-xs-2.col-md-1
+                  =link_to 'Delete', answer_path({id: answer.id}), method: :delete
+
+
+.row
+  .col-xs-12.col-sm-8
+    .panel.panel-default
+      =form_for [@question, @question.answers.new], html:{class: "form-horizontal"} do |f|
+        .panel-heading
+          =f.label :body, 'Ask Answer text'
+        .panel-body
+          =f.text_area :body, rows: 10, class: 'form-control'
+            
+          =f.submit 'Ask'

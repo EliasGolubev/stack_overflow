@@ -4,6 +4,13 @@ FactoryGirl.define do
   factory :question do
     title "MyString"
     body "MyText"
+    user
+  end
+
+  factory :second_question, class: Question do 
+    title "MySecondString"
+    body "MySecondText"
+    user
   end
 
   factory :invalid_question, class: Question do 
