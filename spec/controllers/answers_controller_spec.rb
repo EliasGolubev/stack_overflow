@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  sign_in_user
-  
-  let(:user){ create(:user) }
   let(:question){ create(:question) }
   let(:answer){ create(:answer, question: question) }
+  let(:user){ answer.user }
+  let(:another_user) { create(:user) }
 
   describe 'POST #create' do 
+    sign_in_user
+    
     context 'with valid answer' do 
       it 'save new answer at database' do
         expect{ post :create, answer: attributes_for(:answer), question_id: question }.to change(Answer, :count).by(1)
@@ -34,14 +35,30 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'DELETE #destroy' do
     before { answer }
+    context 'current user is author questions' do 
+      before { sign_in(user)}
+      
+      it 'deletes answer' do 
+        expect { delete :destroy, id: answer }.to change(Answer, :count).by(-1)
+      end
 
-    it 'deletes answer' do 
-      expect { delete :destroy, id: answer }.to change(Answer, :count).by(-1)
+      it 'redirect to show question view' do
+        delete :destroy, id: answer
+        expect(response).to redirect_to question
+      end
     end
 
-    it 'redirect to show question view' do
-      delete :destroy, id: answer
-      expect(response).to redirect_to question
+    context 'current user is not author questions' do 
+      before { sign_in(another_user)}
+      
+      it 'don\'t delete answer' do
+        expect { delete :destroy, id: answer }.to change(Answer, :count).by(0)
+      end
+
+      it 'redirect to question view' do 
+        delete :destroy, id: answer
+        expect(response).to redirect_to question
+      end
     end
   end
 end

@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question) }
+  let(:user) { question.user }
+  let(:another_user) { create(:user) }
 
   describe 'GET #index' do 
     let(:questions) { create_list(:question, 2) }
@@ -90,8 +92,9 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'PATCH #update' do
     sign_in_user
-
+    
     context 'with valid attributes' do 
+
       it 'assings the requested question to @question' do 
         patch :update, id: question, question: attributes_for(:question)
         
@@ -115,6 +118,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'with invalid attributes' do 
+      
       before do 
         patch :update, id: question, question: { title: 'new title', body: nil }
       end 
@@ -134,15 +138,31 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do 
     before { question }
-    sign_in_user
     
-    it 'deletes question' do  
-      expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+    context 'current user is author questions' do
+      before { sign_in(user)}
+
+      it 'deletes question' do  
+        expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirect to index view' do 
+        delete :destroy, id: question.id
+        expect(response).to redirect_to questions_path
+      end
     end
 
-    it 'redirect to index view' do 
-      delete :destroy, id: question
-      expect(response).to redirect_to questions_path
+    context 'current user is not author questions' do
+      before { sign_in(another_user) }
+      
+      it 'don\'t delete question' do 
+        expect{ delete :destroy, id: question }.to change(Question, :count).by(0)
+      end
+
+      it 'redirect to index view' do 
+        delete :destroy, id: question 
+        expect(response).to redirect_to questions_path
+      end
     end
   end
 end
