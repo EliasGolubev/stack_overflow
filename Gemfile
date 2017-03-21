@@ -46,6 +46,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'faker'
   gem 'factory_girl_rails'
+  gem 'selenium-webdriver'
 end
 
 group :development do
@@ -56,6 +57,7 @@ group :development do
   gem 'rubocop', '~> 0.47.1', require: false
   gem 'guard-rspec', require: false
   gem 'spring-commands-rspec'
+  gem 'chromedriver-helper'
 end
 
 group :test do

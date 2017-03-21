@@ -11,22 +11,22 @@ RSpec.describe AnswersController, type: :controller do
     
     context 'with valid answer' do 
       it 'save new answer at database' do
-        expect{ post :create, answer: attributes_for(:answer), question_id: question }.to change(Answer, :count).by(1)
+        expect{ post :create, answer: attributes_for(:answer), question_id: question, format: :js }.to change(question.answers, :count).by(1)
       end
 
-      it 'redirect to question path' do 
-        post :create, answer: attributes_for(:answer), question_id: question
-        expect(response).to redirect_to question
+      it 'render create tamplate' do 
+        post :create, answer: attributes_for(:answer), question_id: question, format: :js
+        expect(response).to render_template 'answers/create'
       end
     end
 
     context 'with invalid answer' do 
       it 'don\'t save question in the database' do 
-        expect{ post :create, answer: attributes_for(:invalid_answer), question_id: question }.to_not change(Answer, :count)
+        expect{ post :create, answer: attributes_for(:invalid_answer), question_id: question, format: :js }.to_not change(Answer, :count)
       end
 
       it 're-renders question show view' do 
-        post :create, answer: attributes_for(:invalid_answer), question_id: question
+        post :create, answer: attributes_for(:invalid_answer), question_id: question, format: :js
 
         expect(response).to render_template 'questions/show'
       end

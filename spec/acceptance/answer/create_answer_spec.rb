@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-feature 'Create answer', %q{
-  In order to answer the question
+feature 'User create answer', %q{
+  In order to exchange my knowledge
   As an authenticated user
   I have to be able to create answer
   } do 
@@ -9,13 +9,14 @@ feature 'Create answer', %q{
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  scenario 'Sign in user can answer question' do 
+  scenario 'Autenticated user can answer question', js: true do 
     sign_in(user)
 
     visit question_path(question)
     fill_in 'Ask Answer', with:'ask text text'
     click_on 'Ask'
 
+    expect(current_path).to eq question_path(question)
     expect(page).to have_content('ask text text')
   end
 
