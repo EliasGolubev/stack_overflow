@@ -1,4 +1,11 @@
 $(document).ready(function(){
+<% if @answer.errors.present? %>
+  <% @answer.errors.full_messages.each do |message| %>
+    $('.answer-errors').addClass('alert alert-info').html('<%= j message %>');
+  <% end %>
+<% else %>
+  $('.answer-errors').removeClass('alert alert-info').html('');
   $('.answers').append('<%= j render @answer %>');
   $('#answer_body').val('');
+<% end %>
 });

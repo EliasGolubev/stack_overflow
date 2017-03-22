@@ -23,6 +23,7 @@
         .panel-heading
           =f.label :body, 'Ask Answer text'
         .panel-body
+          .answer-errors
           =f.text_area :body, rows: 10, class: 'form-control'
             
           =f.submit 'Ask'

@@ -4,8 +4,7 @@ class AnswersController < ApplicationController
     @question = Question.find(params[:question_id])
     @answer = @question.answers.build(answer_params)
     @answer.user_id = current_user.id
-
-    render 'questions/show' unless @answer.save
+    @answer.save
   end
 
   def destroy
