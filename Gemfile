@@ -46,7 +46,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'faker'
   gem 'factory_girl_rails'
-  gem 'selenium-webdriver'
+  gem 'capybara-webkit', '= 1.1.0'
 end
 
 group :development do
@@ -55,9 +55,8 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'rubocop', '~> 0.47.1', require: false
-  gem 'guard-rspec', require: false
+  gem 'guard-rspec',          require: false
   gem 'spring-commands-rspec'
-  gem 'chromedriver-helper'
 end
 
 group :test do

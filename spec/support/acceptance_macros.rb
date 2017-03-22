@@ -1,4 +1,4 @@
-module AcceptanceHelper
+module AcceptanceMacros
   DEFAULT_REGISTRATION = {
     username:              'user',
     email:                 'user@email.com',

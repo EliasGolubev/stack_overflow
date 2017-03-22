@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../acceptance_helper.rb'
 
 feature 'User edit question', %q{
   In order to be able to edit my question text
