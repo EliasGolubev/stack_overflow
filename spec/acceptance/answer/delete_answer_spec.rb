@@ -9,7 +9,7 @@ feature 'Destroy answer', %q{
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  scenario 'Sign in user delete his question' do 
+  scenario 'Sign in user delete his question', js: true do 
     sign_in(user)
 
     visit question_path(question)
@@ -21,7 +21,7 @@ feature 'Destroy answer', %q{
     expect(page).to_not have_content('answer text')
   end
 
-  scenario 'Sign in user can\'t delete someone else\'s question' do
+  scenario 'Sign in user can\'t delete someone else\'s question', js: true do
     sign_in(user)
     
     visit(question_path(question))
