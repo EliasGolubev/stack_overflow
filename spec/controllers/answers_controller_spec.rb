@@ -27,9 +27,45 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  describe 'PATCH #update' do 
+
+    context 'with user is autor answer' do
+      sign_in_user
+      let(:answer){ create(:answer, question: question, user: @user) }
+
+      it 'assings the requested answer to @answer' do
+        patch :update, id: answer, answer: attributes_for(:answer), format: :js
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'changes answer atributes' do
+        patch :update, id: answer, answer: { body: 'new body' }, format: :js
+        answer.reload
+        expect(answer.body).to eq 'new body'
+      end
+
+      it 'render update tamplate' do
+        patch :update, id: answer, answer: attributes_for(:answer), format: :js
+        expect(response).to render_template :update
+      end
+    end
+
+    context 'with user is not autor answer' do
+      sign_in_user
+      let(:answer){ create(:answer, question: question) }
+
+      it 'no changes answer atributes' do
+        patch :update, id: answer, answer: { body: 'new body' }, format: :js
+        answer.reload
+        expect(answer.body).to_not eq 'new body'
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     before { answer }
-    context 'current user is author questions' do 
+
+    context 'current user is author questions' do
       before { sign_in(user)}
       
       it 'deletes answer' do 

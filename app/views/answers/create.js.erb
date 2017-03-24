@@ -5,7 +5,7 @@ $(document).ready(function(){
   <% end %>
 <% else %>
   $('.answer-errors').removeClass('alert alert-info').html('');
-  $('.answers').append('<%= j render @answer %>');
   $('#answer_body').val('');
+  $('.answers').append('<%= j render 'answer', answer: @answer %>');
 <% end %>
 });

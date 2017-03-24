@@ -2,8 +2,18 @@
   .row
     .panel.panel-primary
       .panel-body
-        .col-xs-12.col-md-11
-          =answer.body
+        .col-xs-12.col-md-10
+          .answer-body id="answer-show-body-#{answer.id}"
+            =answer.body
+
+          = form_for answer, remote: true, html: { id: "edit_answer_#{answer.id}" } do |f|
+            =f.label :body, 'Edit Answer'
+            .edit-answer-errors
+            =f.text_area :body, rows: 5, class: 'form-control'
+            =f.submit 'Update Answer', class: 'update-answer-button', data: { answer_id: answer.id }
+
         - if current_user && answer.user_id == current_user.id
-          .col-xs-2.col-md-1
+          .col-xs-1.col-md-1
+            = link_to 'Edit', '', class: 'edit-answer-link', data: {answer_id: answer.id}
+          .col-xs-1.col-md-1
             =link_to 'Delete', answer_path({id: answer.id}), method: :delete

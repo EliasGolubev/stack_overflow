@@ -15,7 +15,10 @@
                 = link_to 'Delete', @question, method: :delete
 .row 
   .answers
-    = render 'answers'
+    -@question.answers.each do |answer|
+      -if !answer.id.nil?
+        = render 'answers/answer', answer: answer
+
 .row
   .col-xs-12.col-sm-8
     .panel.panel-default
