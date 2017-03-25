@@ -69,12 +69,7 @@ RSpec.describe AnswersController, type: :controller do
       before { sign_in(user)}
       
       it 'deletes answer' do 
-        expect { delete :destroy, id: answer }.to change(Answer, :count).by(-1)
-      end
-
-      it 'redirect to show question view' do
-        delete :destroy, id: answer
-        expect(response).to redirect_to question
+        expect { delete :destroy, id: answer, format: :js }.to change(Answer, :count).by(-1)
       end
     end
 
@@ -82,12 +77,7 @@ RSpec.describe AnswersController, type: :controller do
       before { sign_in(another_user)}
       
       it 'don\'t delete answer' do
-        expect { delete :destroy, id: answer }.to change(Answer, :count).by(0)
-      end
-
-      it 'redirect to question view' do 
-        delete :destroy, id: answer
-        expect(response).to redirect_to question
+        expect { delete :destroy, id: answer, format: :js }.to change(Answer, :count).by(0)
       end
     end
   end
