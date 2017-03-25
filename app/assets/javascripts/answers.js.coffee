@@ -1,4 +1,4 @@
-ready = ->
+eadit_answer = ->
     $(".edit-answer-link").click (e)->
       e.preventDefault()
       $(this).hide();
@@ -7,7 +7,7 @@ ready = ->
       return undefined
     return undefined
 
-$(document).ready(ready)
-$(document).on('page:load', ready)
-$(document).on("turbolinks:load", ready)
-$(document).on('page:update', ready)
+$(document).ready(eadit_answer)
+$(document).on('page:load', eadit_answer)
+$(document).on("turbolinks:load", eadit_answer)
+$(document).on('page:update', eadit_answer)
