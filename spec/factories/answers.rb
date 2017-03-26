@@ -3,10 +3,13 @@
 FactoryGirl.define do
   factory :answer do
     user
+    question
     body "MyText"
+    best false
   end
 
   factory :invalid_answer, class: Answer do 
     body nil
+    best false
   end
 end

@@ -81,4 +81,44 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #set_best' do
+    context 'with autor question set best' do
+      sign_in_user
+      let(:question){ create(:question, user: @user) }
+      let(:answer){ create(:answer, question: question) }
+
+      it 'change best answer' do
+        patch :set_best, id: answer, format: :js
+        answer.reload
+        expect(answer.best).to_not eq false
+        expect(answer.best).to eq true
+      end
+    end
+
+    context 'with no autor question set best' do
+      sign_in_user
+      let(:question){ create(:question) }
+      let(:answer){ create(:answer, question: question) }
+
+      it 'don\'t change answer best' do
+        patch :set_best, id: answer, format: :js
+        answer.reload
+        expect(answer.best).to_not eq true
+        expect(answer.best).to eq false
+      end
+    end
+
+    context 'with non login user' do
+      let(:question){ create(:question) }
+      let(:answer){ create(:answer, question: question) }
+
+      it 'don\'t change answer best' do
+        patch :set_best, id: answer, format: :js
+        answer.reload
+        expect(answer.best).to_not eq true
+        expect(answer.best).to eq false
+      end
+    end
+  end
 end

@@ -17,3 +17,9 @@
             = link_to 'Edit', '', class: 'edit-answer-link', data: {answer_id: answer.id}
           .col-xs-1.col-md-1
             =link_to 'Delete', answer, method: :delete, remote: true
+        .col-xs-12.col-md-10
+        - if current_user && answer.question.user_id == current_user.id
+          .col-xs-1.col-md-1
+            = link_to 'Best', set_best_answer_path(answer), class: "btn btn-default", remote: true, method: :patch
+
+
