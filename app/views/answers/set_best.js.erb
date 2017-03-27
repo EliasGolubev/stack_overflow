@@ -1,1 +1,3 @@
-$('.answers').html('<%= j render @answer.question.answers %>');
+$(document).ready(function() {
+    $('.answers').html('<%= j render @answer.question.answers %>');
+});

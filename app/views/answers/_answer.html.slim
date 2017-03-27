@@ -1,27 +1,26 @@
-.col-xs-12.col-sm-8 id="answer-#{answer.id}"
-  .row
-    .panel.panel-primary
-      .panel-body
-        .col-xs-12.col-md-11
-          .answer-body id="answer-show-body-#{answer.id}"
-            =answer.body
+.answer
+  .col-xs-12.col-sm-8 id="answer-#{answer.id}"
+    .row
+      .panel.panel-primary
+        .panel-body
+          .col-xs-12.col-md-11
+            .answer-body id="answer-show-body-#{answer.id}"
+              =answer.body
 
-          = form_for answer, remote: true, html: { id: "edit_answer_#{answer.id}" } do |f|
-            =f.label :body, 'Edit Answer'
-            .edit-answer-errors
-            =f.text_area :body, rows: 5, class: 'form-control'
-            =f.submit 'Update Answer', class: 'update-answer-button', data: { answer_id: answer.id }
-        .col-xs-12.col-md-1
-          - if answer.best?
+            = form_for answer, remote: true, html: { id: "edit_answer_#{answer.id}" } do |f|
+              =f.label :body, 'Edit Answer'
+              .edit-answer-errors
+              =f.text_area :body, rows: 5, class: 'form-control'
+              =f.submit 'Update Answer', class: 'update-answer-button', data: { answer_id: answer.id }
+          .col-xs-12.col-md-1
+            - if answer.best?
+              .row
+                span class="label label-success" best
+            - if current_user && answer.user_id == current_user.id
+              .row
+                = link_to 'Edit', '', class: 'edit-answer-link', data: {answer_id: answer.id}
+              .row
+                =link_to 'Delete', answer, method: :delete, remote: true
             .row
-              span class="label label-success" best
-          - if current_user && answer.user_id == current_user.id
-            .row
-              = link_to 'Edit', '', class: 'edit-answer-link', data: {answer_id: answer.id}
-            .row
-              =link_to 'Delete', answer, method: :delete, remote: true
-          .row
-            - if current_user && answer.question.user_id == current_user.id
-              = link_to 'Best', set_best_answer_path(answer), class: "btn btn-default", remote: true, method: :patch
-
-
+              - if current_user && answer.question.user_id == current_user.id
+                = link_to 'Best', set_best_answer_path(answer), class: "btn btn-default", remote: true, method: :patch

@@ -30,6 +30,16 @@ feature 'Set best answer', %q{
           expect(page).to_not have_content('best')
         end
       end
+
+      scenario 'can made best answer, and best answer show first answers lists', js: true do
+        within "div#answer-#{answer2.id}" do
+          click_on 'Best'
+          wait_for_ajax
+        end
+
+        expect(first(".answer")).to have_content "best"
+        expect(first(".answer")).to have_selector "#answer-#{answer2.id}"
+      end
     end
 
     context 'with no autor question', js: true do
