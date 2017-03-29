@@ -8,6 +8,7 @@ module AcceptanceMacros
 
   DEFAULT_QUESTION_FORM = {
     action: 'new',
+    file: false,
     title: 'Question title text',
     body:  'Question body text'
   }.freeze

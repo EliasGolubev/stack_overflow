@@ -38,6 +38,7 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'twitter-bootstrap-rails'
+gem 'carrierwave'
 
 group :development, :test do
   gem 'byebug', platform: :mri
