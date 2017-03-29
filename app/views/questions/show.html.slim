@@ -15,7 +15,7 @@
                   |Attachments:
                   ul
                     -@question.attachments.each do |a|
-                      li= a.file.file.filename
+                      li= link_to a.file.identifier, a.file.url
             .col-xs-2.col-md-1
               - if current_user && @question.user_id == current_user.id
                 .col-xs-2.col-md-1
