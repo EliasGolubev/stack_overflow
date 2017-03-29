@@ -96,13 +96,13 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with valid attributes' do 
 
       it 'assings the requested question to @question' do 
-        patch :update, id: question, question: attributes_for(:question)
+        patch :update, id: question, question: attributes_for(:question), format: :js
         
         expect(assigns(:question)).to eq question
       end
 
       it 'changes question atributes' do 
-        patch :update, id: question, question: { title: 'new title', body: 'new body' }
+        patch :update, id: question, question: { title: 'new title', body: 'new body' }, format: :js
         
         question.reload
         
@@ -110,17 +110,17 @@ RSpec.describe QuestionsController, type: :controller do
         expect(question.body).to eq 'new body'
       end
 
-      it 'redirect to question path' do 
-        patch :update, id: question, question: attributes_for(:question)
+      it 'render update question' do
+        patch :update, id: question, question: attributes_for(:question), format: :js
         
-        expect(response).to redirect_to question
+        expect(response).to render_template :update
       end
     end
 
     context 'with invalid attributes' do 
       
       before do 
-        patch :update, id: question, question: { title: 'new title', body: nil }
+        patch :update, id: question, question: { title: 'new title', body: nil }, format: :js
       end 
 
       it 'does\'t change question attributes' do        
@@ -130,8 +130,8 @@ RSpec.describe QuestionsController, type: :controller do
         expect(question.body).to eq 'MyText'
       end
 
-      it 're-render edit view' do 
-        expect(response).to render_template :edit
+      it 're-render question view' do
+        expect(response).to render_template :update
       end
     end
   end

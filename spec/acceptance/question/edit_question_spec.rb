@@ -1,83 +1,100 @@
-require 'rails_helper'
+require_relative '../acceptance_helper.rb'
 
 feature 'User edit question', %q{
   In order to be able to edit my question text
   As an User
   I want to be able to edit my question
-} do 
-  before do 
-    @user = create(:user)
-    @question = @user.questions.create(title: 'Text', body: 'Body text')
+} do
+
+  given(:question) { create(:question) }
+  describe 'Autorization user' do
+
+    context 'with autor question' do
+      before do
+        sign_in question.user
+        visit question_path(question)
+      end
+
+      scenario 'can\'t see edit link at root path' do
+        visit root_path
+
+        expect(page).to_not have_content('Edit')
+      end
+
+      scenario 'can see link edit' do
+        expect(page).to have_content('Edit')
+      end
+
+      scenario 'click link edit and can see edit form', js: true do
+        click_on 'Edit'
+
+        expect(page).to have_content('Title')
+        expect(page).to have_content('Question text')
+      end
+
+      scenario 'can\'t see edit question form', js: true do
+        expect(page).to_not have_content('Title')
+        expect(page).to_not have_content('Question text')
+        expect(page).to_not have_content('Edit question')
+      end
+
+      scenario 'edit question', js: true do
+        click_on 'Edit'
+        fill_in 'Title', with: 'New title question'
+        fill_in 'Question text', with: 'New body question'
+        click_on 'Edit question'
+
+        expect(page).to have_content('New title question')
+        expect(page).to have_content('New body question')
+        expect(page).to_not have_content question.title
+        expect(page).to_not have_content question.body
+      end
+
+      scenario 'don\'t fill Title', js: true do
+        click_on 'Edit'
+        fill_in 'Title', with: nil
+        fill_in 'Question text', with: 'New body question'
+        click_on 'Edit question'
+
+        expect(page).to have_content('Title can\'t be blank')
+      end
+
+      scenario 'don\'t fill Question text', js: true do
+        click_on 'Edit'
+        fill_in 'Title', with: 'New title question'
+        fill_in 'Question text', with: nil
+        click_on 'Edit question'
+
+        expect(page).to have_content('Body can\'t be blank')
+      end
+
+      scenario 'don\'t fill Title and Question text', js:true do
+        click_on 'Edit'
+        fill_in 'Title', with: nil
+        fill_in 'Question text', with: nil
+        click_on 'Edit question'
+
+        expect(page).to have_content('Title can\'t be blank')
+        expect(page).to have_content('Body can\'t be blank')
+      end
+    end
+
+    context 'with no autor user' do
+      scenario 'don\'t see edit link', js: true do
+        user = create(:user)
+        sign_in(user)
+        visit question_path(question)
+
+        expect(page).to_not have_content('Edit')
+      end
+    end
   end
 
-  scenario 'User can see button edit(his question) on root_path' do 
-    sign_in(@user)
+  describe 'No autorizated user' do
+    scenario 'don\'t see edit link', js: true do
+      visit question_path(question)
 
-    visit root_path
-    click_on 'Edit'
-
-    expect(current_path).to eq edit_question_path(@question)
-    expect(page).to have_content('Title')
-    expect(page).to have_content('Question text')
-    expect(page).to have_button('Edit question')
+      expect(page).to_not have_content('Edit')
+    end
   end
-
-  scenario 'User can see button edit on his question path' do
-    sign_in(@user)
-
-    visit question_path(@question)
-
-    expect(page).to have_content('Text')
-    expect(page).to have_content('Edit')
-  end
-
-  scenario 'User can\'t see button edit(alien question) on root_path' do
-    visit root_path
-
-    expect(page).to have_content('Text')
-    expect(page).to_not have_content('Edit')
-  end
-
-  scenario 'User can\'t see button edit on alien question path' do
-    visit question_path(@question)
-
-    expect(page).to have_content('Text')
-    expect(page).to have_content('Body')
-    expect(page).to_not have_content('Edit')
-  end
-
-  scenario 'User can edit his question' do 
-    sign_in(@user)
-
-    visit root_path
-    click_on 'Edit'
-    question_form(action: 'edit')
-
-    expect(page).to have_content('Question title text')
-    expect(page).to have_content('Question body text')
-    expect(page).to_not have_content('Text')
-    expect(page).to_not have_content('Body text')
-  end
-
-  scenario 'User edit his question and not fill title field' do 
-    sign_in(@user)
-
-    visit root_path
-    click_on 'Edit'
-    question_form(action: 'edit', title: nil)
-
-    expect(page).to have_content('Title can\'t be blank')
-  end
-
-  scenario 'User edit his question and not fill title field' do 
-    sign_in(@user)
-
-    visit root_path
-    click_on 'Edit'
-    question_form(action: 'edit', body: nil)
-
-    expect(page).to have_content('Body can\'t be blank')
-  end
-
- 
 end

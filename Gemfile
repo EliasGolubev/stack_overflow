@@ -28,6 +28,7 @@ gem 'devise'
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
+gem 'jquery-turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -46,7 +47,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'faker'
   gem 'factory_girl_rails'
-  gem 'selenium-webdriver'
+  gem 'capybara-webkit', '= 1.1.0'
 end
 
 group :development do
@@ -55,9 +56,8 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'rubocop', '~> 0.47.1', require: false
-  gem 'guard-rspec', require: false
+  gem 'guard-rspec',          require: false
   gem 'spring-commands-rspec'
-  gem 'chromedriver-helper'
 end
 
 group :test do

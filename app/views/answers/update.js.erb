@@ -1,0 +1,13 @@
+$(document).ready(function(){
+<% if @answer.errors.present? %>
+  <% @answer.errors.full_messages.each do |message| %>
+    $('.edit-answer-errors').addClass('alert alert-info').html('<%= j message %>');
+  <% end %>
+<% else %>
+  $('.edit-answer-errors').removeClass('alert alert-info').html('');
+  $('#answer-show-body-<%= @answer.id %>').html('<%= j @answer.body %>');
+  $("#edit_answer_<%= @answer.id %>").hide();
+  $(".edit-answer-link").html('Edit');
+  $(".edit-answer-link").show();
+<% end %>
+});

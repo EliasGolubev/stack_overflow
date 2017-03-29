@@ -1,0 +1,15 @@
+$(document).ready(function(){
+    <% if @question.errors.present? %>
+      $('.errors-question').html('');
+      <% @question.errors.full_messages.each do |message| %>
+        $('.errors-question').addClass('alert alert-info').append("<li><%= j message %></li>");
+        console.log('errors');
+      <% end %>
+    <% else %>
+        $('.errors-question').removeClass('alert alert-info').html('');
+        $('.show-question-title').html('<%= @question.title %>');
+        $('.question-show-body').html('<%= @question.body %>');
+        $('.question-show').show();
+        $('.question-edit').hide();
+    <% end %>
+});

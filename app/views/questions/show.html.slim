@@ -1,21 +1,43 @@
 .row
+
   .col-xs-12.col-sm-8
     .row
-      .panel.panel-default
-        .panel-heading
-          h4 = @question.title
-        .panel-body
-          .col-xs-12.col-md-11
-            = @question.body
-          .col-xs-2.col-md-1
-            - if current_user && @question.user_id == current_user.id
-              .col-xs-2.col-md-1
-                = link_to 'Edit', edit_question_path(@question)
-              .col-xs-2.col-md-1  
-                = link_to 'Delete', @question, method: :delete
+      .question-show
+        .panel.panel-default
+          .panel-heading
+            h4 class="show-question-title" = @question.title
+          .panel-body
+            .col-xs-12.col-md-11
+              .question-show-body
+                = @question.body
+            .col-xs-2.col-md-1
+              - if current_user && @question.user_id == current_user.id
+                .col-xs-2.col-md-1
+                  = link_to 'Edit', '', class: 'edit-question-link'
+                .col-xs-2.col-md-1
+                  = link_to 'Delete', @question, method: :delete
+
+      .question-edit
+        = form_for @question, remote: true do |f|
+
+          .panel.panel-default
+            .form-group.panel-heading
+              = f.label :title
+              = f.text_field :title, class: "form-control"
+
+            .form-group.panel-body
+              = f.label :body, 'Question text'
+              .errors-question
+              = f.text_area :body, class: "form-control", rows: 6
+
+            .actions
+              = f.submit 'Edit question', class: 'btn btn-default'
 .row 
   .answers
-    = render 'answers'
+    -@question.answers.each do |answer|
+      -if !answer.id.nil?
+        = render 'answers/answer', answer: answer
+
 .row
   .col-xs-12.col-sm-8
     .panel.panel-default
@@ -23,6 +45,7 @@
         .panel-heading
           =f.label :body, 'Ask Answer text'
         .panel-body
+          .answer-errors
           =f.text_area :body, rows: 10, class: 'form-control'
             
           =f.submit 'Ask'
