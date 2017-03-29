@@ -10,6 +10,12 @@
             .col-xs-12.col-md-11
               .question-show-body
                 = @question.body
+              .attachments-question-files
+                p
+                  |Attachments:
+                  ul
+                    -@question.attachments.each do |a|
+                      li= a.file.file.filename
             .col-xs-2.col-md-1
               - if current_user && @question.user_id == current_user.id
                 .col-xs-2.col-md-1
