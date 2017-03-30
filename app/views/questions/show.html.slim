@@ -55,8 +55,8 @@
           =f.text_area :body, rows: 10, class: 'form-control'
 
           = f.fields_for :attachments do |a|
-            = a.label :file
-            = a.file_field :file
+            .links
+              = link_to_add_association 'Add attachments', f, :attachments
 
         .actions
           =f.submit 'Ask'
