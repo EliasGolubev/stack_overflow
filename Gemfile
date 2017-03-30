@@ -39,6 +39,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 gem 'twitter-bootstrap-rails'
 gem 'carrierwave'
+gem 'remotipart'
 
 group :development, :test do
   gem 'byebug', platform: :mri

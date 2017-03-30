@@ -47,11 +47,16 @@
 .row
   .col-xs-12.col-sm-8
     .panel.panel-default
-      =form_for [@question, @question.answers.new], html:{class: "form-horizontal"}, remote: true do |f|
+      =form_for [@question, @answer], html:{class: "form-horizontal"}, remote: true do |f|
         .panel-heading
           =f.label :body, 'Ask Answer text'
         .panel-body
           .answer-errors
           =f.text_area :body, rows: 10, class: 'form-control'
-            
+
+          = f.fields_for :attachments do |a|
+            = a.label :file
+            = a.file_field :file
+
+        .actions
           =f.submit 'Ask'
