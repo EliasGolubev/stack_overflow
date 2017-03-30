@@ -10,11 +10,10 @@
     =f.label :body, 'Question text'
     =f.text_area :body, class: "form-control", rows: 15
 
-  p Attachments:
   .form-group
-    = f.fields_for :attachments do |a|
-      = a.label :file
-      = a.file_field :file
+      = f.fields_for :attachments do |a|
+      .links
+        = link_to_add_association 'Add attachments', f, :attachments
 
   .actions
     =f.submit question.new_record? ? 'Ask question': 'Edit question', class: 'btn btn-default'

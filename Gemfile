@@ -40,6 +40,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'twitter-bootstrap-rails'
 gem 'carrierwave'
 gem 'remotipart'
+gem "cocoon"
 
 group :development, :test do
   gem 'byebug', platform: :mri
