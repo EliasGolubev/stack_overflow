@@ -1,28 +1,21 @@
-.row
-
-  .col-xs-12.col-sm-8
+.row.page-header
+  .col-xs-12.col-md-8
     .row
       .question-show
         .panel.panel-default
           .panel-heading
-            h4 class="show-question-title" = @question.title
+            h3 class="show-question-title" = @question.title
           .panel-body
             .col-xs-12.col-md-11
               .question-show-body
                 = @question.body
+              hr
               .attachments-question-files
-                p
-                  |Attachments:
-                  ul
-                    -@question.attachments.each do |a|
-                      li= link_to a.file.identifier, a.file.url
+                = render 'attachments_show', resource: @question
+
             .col-xs-2.col-md-1
               - if current_user && @question.user_id == current_user.id
-                .col-xs-2.col-md-1
-                  = link_to 'Edit', '', class: 'edit-question-link'
-                .col-xs-2.col-md-1
-                  = link_to 'Delete', @question, method: :delete
-
+                = render 'links', question: @question
       .question-edit
         = form_for @question, remote: true do |f|
 
