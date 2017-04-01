@@ -11,7 +11,7 @@
                 = @question.body
               hr
               .attachments-question-files
-                = render 'attachments_show', resource: @question
+                = render 'attachments/attachments_show', resource: @question
 
             .col-xs-2.col-md-1
               - if current_user && @question.user_id == current_user.id

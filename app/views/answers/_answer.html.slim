@@ -7,7 +7,7 @@
             .answer-body id="answer-show-body-#{answer.id}"
               =answer.body
             .attachments-answer-files
-              = render 'questions/attachments_show', resource: answer
+              = render 'attachments/attachments_show', resource: answer
 
             = form_for answer, remote: true, html: { id: "edit_answer_#{answer.id}" } do |f|
               =f.label :body, 'Edit Answer'
