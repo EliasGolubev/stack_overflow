@@ -4,7 +4,7 @@ class AttachmentsController < ApplicationController
   def destroy
     @attachment = Attachment.find(attachments_params)
 
-    if current_user.id == @attachment.getPolymorphicResource.user_id
+    if current_user.id == @attachment.attachmentable.user_id
       @attachment.destroy
     end
   end
