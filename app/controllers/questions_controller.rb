@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_question, only: [:show, :edit, :update, :destroy]
+  before_action :load_question, only: [:show, :update, :destroy]
 
   def index
     @questions = Question.all
@@ -8,13 +8,13 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = @question.answers.build
+    @answer.attachments.build
   end
 
   def new
     @question = Question.new
+    @question.attachments.build
   end
-
-  def edit; end
 
   def create
     @question = current_user.questions.create(question_params)
@@ -43,6 +43,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, attachments_attributes: [:file, :id, :_destroy])
   end
 end

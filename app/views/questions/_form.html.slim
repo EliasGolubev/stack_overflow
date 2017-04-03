@@ -1,5 +1,5 @@
 =form_for question do |f|
-  
+
   = render 'common/errors', resources: question
 
   .form-group
@@ -9,6 +9,11 @@
   .form-group
     =f.label :body, 'Question text'
     =f.text_area :body, class: "form-control", rows: 15
+
+  .form-group
+      = f.fields_for :attachments do |a|
+      .links
+        = link_to_add_association 'Add attachments', f, :attachments
 
   .actions
     =f.submit question.new_record? ? 'Ask question': 'Edit question', class: 'btn btn-default'
