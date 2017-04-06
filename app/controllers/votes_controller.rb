@@ -1,8 +1,9 @@
 class VotesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_vote, only: [:update, :destroy]
   def create
     @question = Question.find(params[:question_id])
-    if @question.user_id != current_user.id
+    if !current_user.author?(@question)
       @vote = @question.votes.build(votes_params)
       @vote.user_id = current_user.id
       @vote.save
@@ -10,20 +11,18 @@ class VotesController < ApplicationController
   end
 
   def update
-    @vote = Vote.find(params[:id])
-    if @vote.user_id == current_user.id
-      @vote.update(votes_params)
-    end
+    @vote.update(votes_params) if current_user.author?(@vote)
   end
 
   def destroy
-    @vote = Vote.find(params[:id])
-    if @vote.user_id == current_user.id
-      @vote.destroy
-    end
+    @vote.destroy if current_user.author?(@vote)
   end
 
   private
+
+  def set_vote
+    @vote = Vote.find(params[:id])
+  end
 
   def votes_params
     params.require(:vote).permit(:vote)

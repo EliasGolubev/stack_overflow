@@ -10,15 +10,15 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer.update(answer_params) if current_user.id == @answer.user_id
+    @answer.update(answer_params) if current_user.author?(@answer)
   end
 
   def destroy
-    @answer.destroy if current_user.id == @answer.user_id
+    @answer.destroy if current_user.author?(@answer)
   end
 
   def set_best
-    @answer.set_best if !@answer.best? && @answer.question.user_id == current_user.id
+    @answer.set_best if !@answer.best? && current_user.author?(@answer.question)
   end
 
   private
