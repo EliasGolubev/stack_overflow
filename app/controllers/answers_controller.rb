@@ -7,6 +7,17 @@ class AnswersController < ApplicationController
     @answer = @question.answers.build(answer_params)
     @answer.user_id = current_user.id
     @answer.save
+    #respond_to do |format|
+    #  if @answer.save
+    #    format.js
+    #    format.html { render partial: @answer, layout: false }
+    #    format.json { render json: @answer }
+    #  else
+    #    format.js
+    #    format.html { render text: @answer.errors.full_messages.join("\n"), status: :unprocessable_entity }
+    #    format.json { render json: @answer.errors.full_messages, status: :unprocessable_entity }
+    #  end
+    #end
   end
 
   def update
