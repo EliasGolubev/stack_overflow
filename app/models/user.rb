@@ -9,4 +9,8 @@ class User < ApplicationRecord
   has_many :votes, dependent: :destroy
 
   validates :username, presence: true
+
+  def author?(resource)
+    resource.user_id == id ? true : false
+  end
 end

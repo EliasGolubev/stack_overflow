@@ -23,6 +23,8 @@ feature 'Set best answer', %q{
       scenario 'can made best answer', js: true do
         within "div#answer-#{answer2.id}" do
           click_on 'Best'
+          wait_for_ajax
+
           expect(page).to have_content('best')
         end
 
@@ -42,16 +44,16 @@ feature 'Set best answer', %q{
       end
     end
 
-    context 'with no autor question', js: true do
+    context 'with no autor question' do
       before do
         sign_in user
         visit question_path(question)
       end
-      scenario 'can\'t see button "Best" answers' do
+      scenario 'can\'t see button "Best" answers', js: true do
         expect(page).to_not have_content("Best")
       end
 
-      scenario 'can see best label' do
+      scenario 'can see best label', js: true do
         within "div#answer-#{answer1.id}" do
           expect(page).to have_content('best')
         end
@@ -59,11 +61,11 @@ feature 'Set best answer', %q{
     end
   end
 
-  describe 'Non autorization user', js: true do
+  describe 'Non autorization user' do
     before do
       visit question_path(question)
     end
-    scenario 'can\'t see button "Best" answers' do
+    scenario 'can\'t see button "Best" answers', js: true do
       expect(page).to_not have_content("Best")
     end
 

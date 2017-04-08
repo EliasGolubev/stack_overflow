@@ -7,7 +7,7 @@ module Voted
 
   def positive_vote
     if @votable.user_vote?(current_user)
-      if !current_user || current_user.id == @votable.user_id
+      if !current_user || current_user.author?(@votable)
         render json: { id: @votable.id, message: 'You can\'t vote' }, status: :unprocessable_entity
       else
         @votable.positive(current_user)
@@ -20,7 +20,7 @@ module Voted
 
   def negative_vote
     if @votable.user_vote?(current_user)
-      if !current_user || current_user.id == @votable.user_id
+      if !current_user || current_user.author?(@votable)
         render json: {id: @votable.id, message: 'You can\'t vote' }, status: :unprocessable_entity
       else
         @votable.negative(current_user)
@@ -32,7 +32,7 @@ module Voted
   end
 
   def re_vote
-    if !current_user || current_user.id == @votable.user_id
+    if !current_user || current_user.author?(@votable)
       render json: { id: @votable.id, message: 'You can\'t re-vote' }, status: :unprocessable_entity
     else
       if @votable.user_vote?(current_user)
