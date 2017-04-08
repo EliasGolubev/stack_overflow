@@ -7,39 +7,39 @@ module Voted
 
   def positive_vote
     if @votable.user_vote?(current_user)
-      if current_user && current_user.id == @votable.user_id
-        render json: { message: 'You can\'t vote' }, status: :unprocessable_entity
+      if !current_user || current_user.id == @votable.user_id
+        render json: { id: @votable.id, message: 'You can\'t vote' }, status: :unprocessable_entity
       else
         @votable.positive(current_user)
         render json: { id: @votable.id, rating: @votable.rating }
       end
     else
-      render json: { message: 'You can vote once' }, status: :unprocessable_entity
+      render json: { id: @votable.id, message: 'You can vote once' }, status: :unprocessable_entity
     end
   end
 
   def negative_vote
     if @votable.user_vote?(current_user)
-      if current_user && current_user.id == @votable.user_id
-        render json: { message: 'You can\'t vote' }, status: :unprocessable_entity
+      if !current_user || current_user.id == @votable.user_id
+        render json: {id: @votable.id, message: 'You can\'t vote' }, status: :unprocessable_entity
       else
         @votable.negative(current_user)
-        render json: { rating: @votable.rating }
+        render json: { id: @votable.id, rating: @votable.rating }
       end
     else
-      render json: { message: 'You can vote once' }, status: :unprocessable_entity
+      render json: { id: @votable.id, message: 'You can vote once' }, status: :unprocessable_entity
     end
   end
 
   def re_vote
-    if @votable.user_vote?(current_user)
-      render json: { message: 'You must vote' }, status: :unprocessable_entity
+    if !current_user || current_user.id == @votable.user_id
+      render json: { id: @votable.id, message: 'You can\'t re-vote' }, status: :unprocessable_entity
     else
-      if current_user && current_user.id == @votable.user_id
-        render json: { message: 'You can\'t vote' }, status: :unprocessable_entity
+      if @votable.user_vote?(current_user)
+        render json: { id: @votable.id, message: 'You must vote' }, status: :unprocessable_entity
       else
         @votable.re_vote(current_user)
-        render json: { rating: @votable.rating }
+        render json: { id: @votable.id, rating: @votable.rating }
       end
     end
   end

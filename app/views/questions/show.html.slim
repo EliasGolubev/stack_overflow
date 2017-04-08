@@ -4,14 +4,33 @@
       .question-show
         .panel.panel-default
           .panel-heading
-            h3 class="show-question-title" = @question.title
+            .row
+              .col-xs-1
+                p
+                  .text-center
+                    = link_to 'UP', polymorphic_path([:positive_vote, @question]), method: :post, class: 'glyphicon glyphicon-arrow-up question-vote-action', remote:true, data: {type: :json}
+                  br
+                  .question_rating_vote.text-center
+                    = @question.rating
+                  br
+                  .text-center
+                    = link_to 'DOWN', polymorphic_path([:negative_vote, @question]), method: :post, class: 'glyphicon glyphicon-arrow-down question-vote-action', remote: true, data: {type: :json}
+                  .text-center
+                    = link_to 'Re-Vote', polymorphic_path([:re_vote, @question]), method: :delete, class: 'question-vote-action', remote:true, data: {type: :json}
+              .col-xs-11
+                .row
+                  h3 class="show-question-title" = @question.title
           .panel-body
             .col-xs-12.col-md-11
+              .question_rating_errors
               .question-show-body
                 = @question.body
               hr
               .attachments-question-files
                 = render 'attachments/attachments_show', resource: @question
+
+              hr
+
 
             .col-xs-2.col-md-1
               - if current_user && @question.user_id == current_user.id

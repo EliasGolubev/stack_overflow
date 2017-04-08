@@ -4,6 +4,12 @@
       .panel.panel-primary
         .panel-body
           .col-xs-12.col-md-11
+            = link_to 'UP', polymorphic_path([:positive_vote, answer]), method: :post, class: 'glyphicon glyphicon-arrow-up answer-vote-action', remote:true, data: {type: :json}
+            .answer_rating_vote id="answer-#{answer.id}-rating"
+                = answer.rating
+            = link_to 'DOWN', polymorphic_path([:negative_vote, answer]), method: :post, class: 'glyphicon glyphicon-arrow-down answer-vote-action', remote: true, data: {type: :json}
+            = link_to 'Re-Vote', polymorphic_path([:re_vote, answer]), method: :delete, class: 'answer-vote-action', remote:true, data: {type: :json}
+            .answer_rating_errors id="answer-#{answer.id}-rating-errors"
             .answer-body id="answer-show-body-#{answer.id}"
               =answer.body
             .attachments-answer-files
