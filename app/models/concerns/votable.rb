@@ -21,4 +21,12 @@ module Votable
   def negative(user)
     votes.create(user: user, user_vote: NEGATIVE_VALUE)
   end
+
+  def user_vote?(user)
+    votes.where(user: user).empty?
+  end
+
+  def re_vote(user)
+    votes.where(user:user).destroy_all
+  end
 end
