@@ -15,8 +15,12 @@ gem 'pg'
 gem 'puma', '~> 3.0'
 # Use Slim for html
 gem 'slim-rails'
+gem 'skim'
+gem 'gon'
+gem 'rabl-rails'
+gem 'sprockets', '3.6.3'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '~> 5.0', '>= 5.0.6'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
