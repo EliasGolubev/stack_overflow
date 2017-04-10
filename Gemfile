@@ -43,7 +43,8 @@ gem 'remotipart'
 gem "cocoon"
 
 group :development, :test do
-  gem 'byebug', platform: :mri
+  gem 'pry-byebug'
+  gem 'pry-rails'
   gem 'rspec-rails'
   gem 'capybara'
   gem 'launchy'

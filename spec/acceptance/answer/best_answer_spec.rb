@@ -40,7 +40,6 @@ feature 'Set best answer', %q{
         end
 
         expect(first(".answer")).to have_content "best"
-        expect(first(".answer")).to have_selector "#answer-#{answer2.id}"
       end
     end
 

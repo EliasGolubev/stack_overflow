@@ -17,16 +17,20 @@ feature 'Vote question', %q{
     end
 
     scenario 'don\'t vote his question', js: true do
-      within '.question-show' do
+      within '.question-vote' do
         click_on 'UP'
+      end
 
+      within '.question-show' do 
         expect(page).to have_content('You can\'t vote')
       end
     end
     scenario 'don\'t re-vote question', js: true do
-      within '.question-show' do
+      within '.question-vote' do
         click_on 'DOWN'
+      end
 
+      within '.question-show' do
         expect(page).to have_content('You can\'t vote')
       end
     end
@@ -39,36 +43,45 @@ feature 'Vote question', %q{
     end
 
     scenario 'vote question up', js: true do
-      within '.question-show' do
+      within '.question-vote' do
         click_on 'UP'
 
         expect(page).to have_content('1')
+      end
+
+      within '.question-show' do
         expect(page).to_not have_content('You can\'t vote')
       end
     end
 
     scenario 'vote question down', js: true do
-      within '.question-show' do
+      within '.question-vote' do
         click_on 'DOWN'
 
         expect(page).to have_content('-1')
+        
+      end
+      within '.question-show' do
         expect(page).to_not have_content('You can\'t vote')
       end
     end
 
     scenario 'vote question once', js: true do
-      within '.question-show' do
+      within '.question-vote' do
         click_on 'DOWN'
         wait_for_ajax
         click_on 'DOWN'
         wait_for_ajax
         expect(page).to have_content('-1')
+      end
+
+      within '.question-show' do
         expect(page).to have_content('You can vote once')
       end
     end
 
     scenario 're-vote question after vote', js: true do
-      within '.question-show' do
+      within '.question-vote' do
         click_on 'DOWN'
         wait_for_ajax
         click_on 'Re-Vote'
@@ -78,11 +91,14 @@ feature 'Vote question', %q{
       end
     end
     scenario 'don\'t re-vote question before vote', js: true do
-      within '.question-show' do
+      within '.question-vote' do
         click_on 'Re-Vote'
         wait_for_ajax
 
-        expect(page).to have_content('0')
+        expect(page).to have_content('0')     
+      end
+
+      within '.question-show' do
         expect(page).to have_content('You must vote')
       end
     end
@@ -94,31 +110,40 @@ feature 'Vote question', %q{
     end
 
     scenario 'don\'t positive vote the question', js: true do
-      within '.question-show' do
+      within '.question-vote' do
         click_on 'UP'
         wait_for_ajax
 
         expect(page).to have_content('0')
+      end
+
+      within '.question-show' do
         expect(page).to have_content('You can\'t vote')
       end
     end
 
     scenario 'don\'t negative vote the question', js: true do
-      within '.question-show' do
+      within '.question-vote' do
         click_on 'DOWN'
         wait_for_ajax
 
         expect(page).to have_content('0')
+      end
+
+      within '.question-show' do
         expect(page).to have_content('You can\'t vote')
       end
     end
 
     scenario 'don\'t re-vote question', js: true do
-      within '.question-show' do
+      within '.question-vote' do
         click_on 'Re-Vote'
         wait_for_ajax
 
-        expect(page).to have_content('0')
+        expect(page).to have_content('0')  
+      end
+
+      within '.question-show' do
         expect(page).to have_content('You can\'t re-vote')
       end
     end
