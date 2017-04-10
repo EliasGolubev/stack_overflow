@@ -7,31 +7,22 @@
             h3 class="show-question-title" = @question.title
           .panel-body
             .col-xs-12.col-md-11
+              .question_rating_errors
               .question-show-body
                 = @question.body
+              -if !@question.attachments.empty?
+                hr
+                .attachments-question-files
+                  = render 'attachments/attachments_show', resource: @question
               hr
-              .attachments-question-files
-                = render 'attachments/attachments_show', resource: @question
-
             .col-xs-2.col-md-1
               - if current_user && @question.user_id == current_user.id
                 = render 'links', question: @question
-      .question-edit
-        = form_for @question, remote: true do |f|
 
-          .panel.panel-default
-            .form-group.panel-heading
-              = f.label :title
-              = f.text_field :title, class: "form-control"
-
-            .form-group.panel-body
-              = f.label :body, 'Question text'
-              .errors-question
-              = f.text_area :body, class: "form-control", rows: 6
-
-            .actions
-              = f.submit 'Edit question', class: 'btn btn-default'
-.row 
+      =render 'question_edit', question: @question
+  .col-xs-12.col-md-1
+    =render 'votes/question_vote', question: @question
+.row
   .answers
     -@question.answers.each do |answer|
       -if !answer.id.nil?
@@ -39,17 +30,4 @@
 
 .row
   .col-xs-12.col-sm-8
-    .panel.panel-default
-      =form_for [@question, @answer], html:{class: "form-horizontal"}, remote: true do |f|
-        .panel-heading
-          =f.label :body, 'Ask Answer text'
-        .panel-body
-          .answer-errors
-          =f.text_area :body, rows: 10, class: 'form-control'
-
-          = f.fields_for :attachments do |a|
-            .links
-              = link_to_add_association 'Add attachments', f, :attachments
-
-        .actions
-          =f.submit 'Ask'
+    =render 'answers/answer_new', question: @question, answer: @answer

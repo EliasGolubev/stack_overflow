@@ -1,0 +1,11 @@
+.row
+  .question-vote
+    .col-xs-12.col-sm-1
+      .col-xs-3.col-sm-12.text-center
+        = link_to 'UP', polymorphic_path([:positive_vote, @question]), method: :post, class: 'question-vote-action', remote:true, data: {type: :json}
+      .col-xs-3.col-sm-12.question_rating_vote.text-center
+          = @question.rating
+      .col-xs-3.col-sm-12.text-center
+        = link_to 'DOWN', polymorphic_path([:negative_vote, @question]), method: :post, class: 'question-vote-action', remote: true, data: {type: :json}
+      .col-xs-3.col-sm-12.text-center
+        = link_to 'Re-Vote', polymorphic_path([:re_vote, @question]), method: :delete, class: 'question-vote-action', remote:true, data: {type: :json}

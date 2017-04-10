@@ -1,0 +1,11 @@
+- if answer.best?
+  .row id="best-label-answer-#{answer.id}"
+      span class="label label-success" best
+- if current_user && answer.user_id == current_user.id
+  .row
+    = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+  .row
+    =link_to 'Delete', answer, method: :delete, remote: true
+.row
+  - if current_user && answer.question.user_id == current_user.id
+    = link_to 'Best', set_best_answer_path(answer), class: "btn btn-default", remote: true, method: :patch

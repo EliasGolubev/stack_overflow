@@ -1,0 +1,14 @@
+.panel.panel-default
+  =form_for [question, answer], html:{class: "form-horizontal new_answer"}, remote: true do |f|
+    .panel-heading
+      =f.label :body, 'Ask Answer text'
+    .panel-body
+      .answer-errors
+      =f.text_area :body, rows: 10, class: 'form-control'
+
+      = f.fields_for :attachments do |a|
+      .links
+        = link_to_add_association 'Add attachments', f, :attachments
+
+      .actions
+        =f.submit 'Ask'

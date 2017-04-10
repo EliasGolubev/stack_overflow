@@ -1,0 +1,5 @@
+= form_for answer, remote: true, html: { id: "edit_answer_#{answer.id}" } do |f|
+  =f.label :body, 'Edit Answer'
+  .edit-answer-errors
+  =f.text_area :body, rows: 5, class: 'form-control'
+  =f.submit 'Update Answer', class: 'update-answer-button', data: { answer_id: answer.id }

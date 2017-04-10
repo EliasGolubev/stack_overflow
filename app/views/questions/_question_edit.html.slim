@@ -1,0 +1,12 @@
+.question-edit
+  = form_for question, remote: true do |f|
+    .panel.panel-default
+      .form-group.panel-heading
+        = f.label :title
+        = f.text_field :title, class: "form-control"
+      .form-group.panel-body
+        = f.label :body, 'Question text'
+        .errors-question
+        = f.text_area :body, class: "form-control", rows: 6
+      .actions
+        = f.submit 'Edit question', class: 'btn btn-default'

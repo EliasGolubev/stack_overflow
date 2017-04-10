@@ -6,6 +6,11 @@ class User < ApplicationRecord
 
   has_many :questions, dependent: :destroy
   has_many :answers, dependent: :destroy
+  has_many :votes, dependent: :destroy
 
   validates :username, presence: true
+
+  def author?(resource)
+    resource.user_id == id ? true : false
+  end
 end

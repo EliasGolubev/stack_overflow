@@ -5,7 +5,7 @@ $(document).ready(function(){
   <% end %>
 <% else %>
   $('.answer-errors').removeClass('alert alert-info').html('');
-  $('#answer_body').val('');
+  $('textarea.form-control#answer_body').val('');
   $('.answers').append('<%= j render 'answer', answer: @answer %>');
 <% end %>
 });
