@@ -6,6 +6,7 @@ edit_question = ->
         return undefined
     return undefined
 
+
 $(document).ready(edit_question)
 $(document).on('page:load', edit_question)
 $(document).on("turbolinks:load", edit_question)
