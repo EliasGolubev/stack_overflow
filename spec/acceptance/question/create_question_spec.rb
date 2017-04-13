@@ -6,8 +6,9 @@ feature 'User create question', %q{
   I want to be able to create question
 } do 
 
-  scenario 'Logged user can see New question button on the root page' do 
-    user = create(:user)
+  given!(:user){ create(:user) }
+
+  scenario 'Logged user can see New question button on the root page' do
     sign_in(user)
 
     visit root_path
@@ -16,7 +17,6 @@ feature 'User create question', %q{
   end
 
   scenario 'Logged user can click New question button' do
-    user = create(:user)
     sign_in(user)
 
     visit root_path
@@ -28,8 +28,7 @@ feature 'User create question', %q{
     expect(current_path).to eq new_question_path
   end 
 
-  scenario 'Logged user fill title and body question' do 
-    user = create(:user)
+  scenario 'Logged user fill title and body question' do
     sign_in(user)
 
     visit new_question_path
@@ -40,7 +39,6 @@ feature 'User create question', %q{
   end
 
   scenario 'Logged user not fill title question' do
-    user = create(:user)
     sign_in(user)
 
     visit new_question_path
@@ -49,8 +47,7 @@ feature 'User create question', %q{
     expect(page).to have_content('Title can\'t be blank')
   end
 
-  scenario 'Logged user not fill body question' do 
-    user = create(:user)
+  scenario 'Logged user not fill body question' do
     sign_in(user)
 
     visit new_question_path
@@ -65,4 +62,29 @@ feature 'User create question', %q{
     expect(page).to have_content('You need to sign in or sign up before continuing.')
     expect(current_path).to eq new_user_session_path
   end
+
+  fcontext "mulitple sessions" do
+    scenario "question appears on another user's page", js: true do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit questions_path
+      end
+ 
+      Capybara.using_session('guest') do
+        visit questions_path
+      end
+
+      Capybara.using_session('user') do
+        click_on 'New question'
+        question_form
+    
+        expect(page).to have_content('Question title text')
+        expect(page).to have_content('Question body text')
+      end
+
+      Capybara.using_session('guest') do
+        expect(page).to have_content('Question title text')
+      end
+    end
+  end 
 end

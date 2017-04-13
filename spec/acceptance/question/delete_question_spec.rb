@@ -12,7 +12,7 @@ feature 'User delete question', %q{
   scenario 'User can delete his question' do 
     sign_in(@user)
 
-    visit root_path
+    visit question_path(@question)
     click_on 'Delete'
 
     expect(page).to_not have_content('Text')
@@ -20,7 +20,7 @@ feature 'User delete question', %q{
   end
 
   scenario 'User can\'t delete alien question' do
-    visit root_path
+    visit question_path(@question)
 
     expect(page).to have_content('Text')
     expect(page).to_not have_content('Delete')

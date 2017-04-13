@@ -41,6 +41,7 @@ gem 'twitter-bootstrap-rails'
 gem 'carrierwave'
 gem 'remotipart'
 gem "cocoon"
+gem 'skim'
 
 group :development, :test do
   gem 'pry-byebug'
