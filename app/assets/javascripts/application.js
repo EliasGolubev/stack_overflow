@@ -17,5 +17,4 @@
 //= require cocoon
 //= require twitter/bootstrap
 //= require turbolinks
-//= require some_template
 //= require_tree .
