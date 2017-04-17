@@ -3,6 +3,7 @@ class AnswersController < ApplicationController
 
   before_action :authenticate_user!, only: [:create, :update, :destroy, :set_best]
   before_action :load_answer, only: [:update, :destroy, :set_best]
+  before_action :destroy_answer, only: [:destroy]
 
   after_action :publish_answer, only: [:create] 
 
@@ -39,6 +40,12 @@ class AnswersController < ApplicationController
         rating: @answer.rating,
         attachments: @answer.attachments.as_json(methods: :with_meta),
         method: 'publish')
+  end
+
+  def destroy_answer
+    ActionCable.server.broadcast("/questions/#{@answer.question_id}/answers",
+      answer_id: @answer.id,
+      method: 'delete')
   end
 
   def answer_params

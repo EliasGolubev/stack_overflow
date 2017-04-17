@@ -14,6 +14,7 @@ createAnswerChannel = ->
       received: (data) ->
         switch data['method']
           when 'publish' then @publish_answer(data)
+          when 'delete' then @delete_answer(data['answer_id'])
 
       publish_answer: (data) ->
         $('.answers').append(JST["templates/answer"]({
@@ -21,6 +22,10 @@ createAnswerChannel = ->
           attachments: data['attachments'], 
           rating: data['rating']
         }))
+
+      delete_answer: (answer_id) ->
+        $("#answer-#{answer_id}").remove()
+        $("#answer-vote-#{answer_id}").remove()
     
 $(document).on("turbolinks:load", channelRemove)
 $(document).on("turbolinks:load", createAnswerChannel)
