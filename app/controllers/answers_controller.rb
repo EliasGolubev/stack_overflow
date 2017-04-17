@@ -3,8 +3,8 @@ class AnswersController < ApplicationController
 
   before_action :authenticate_user!, only: [:create, :update, :destroy, :set_best]
   before_action :load_answer, only: [:update, :destroy, :set_best]
-  before_action :destroy_answer, only: [:destroy]
-
+  
+  after_action :destroy_answer, only: [:destroy]
   after_action :publish_answer, only: [:create] 
 
   def create
@@ -43,6 +43,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy_answer
+    return if !current_user.author?(@answer)
     ActionCable.server.broadcast("/questions/#{@answer.question_id}/answers",
       answer_id: @answer.id,
       method: 'delete')

@@ -3,7 +3,6 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, only: [:new, :create, :update, :destroy]
   before_action :load_question, only: [:show, :update, :destroy]
-  before_action :destroy_question, only: [:destroy]
 
   after_action :publish_question, only: [:create]
 
@@ -37,8 +36,10 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy if current_user.author?(@question)
-
+    if current_user.author?(@question)
+      @question.destroy 
+      destroy_question
+    end
     redirect_to questions_path
   end
 
