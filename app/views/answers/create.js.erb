@@ -6,6 +6,5 @@ $(document).ready(function(){
 <% else %>
   $('.answer-errors').removeClass('alert alert-info').html('');
   $('textarea.form-control#answer_body').val('');
-  $('.answers').append('<%= j render 'answer', answer: @answer %>');
 <% end %>
 });

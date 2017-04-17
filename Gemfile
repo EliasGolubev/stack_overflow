@@ -17,7 +17,7 @@ gem 'sprockets', '3.6.3'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
-gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', '0.12.1', platforms: :ruby
 gem 'devise'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5'

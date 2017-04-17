@@ -280,8 +280,8 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     temple (0.7.7)
-    therubyracer (0.12.3)
-      libv8 (~> 3.16.14.15)
+    therubyracer (0.12.1)
+      libv8 (~> 3.16.14.0)
       ref
     thor (0.19.4)
     thread_safe (0.3.6)
@@ -350,7 +350,7 @@ DEPENDENCIES
   spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)
   sprockets (= 3.6.3)
-  therubyracer
+  therubyracer (= 0.12.1)
   turbolinks (~> 5)
   twitter-bootstrap-rails
   tzinfo-data

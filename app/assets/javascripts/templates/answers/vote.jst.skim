@@ -1,0 +1,13 @@
+.answer-vote id="answer-vote-#{@answer.id}"
+  .row
+    .col-xs-12.col-sm-1
+      p
+        .col-xs-3.col-sm-12.text-center
+          a class="answer-vote-action" data-type="json" data-remote="true" rel="nofollow" data-method="post" href="/answers/#{@answer.id}/positive_vote"UP
+        .col-xs-3.col-sm-12.text-center
+          .answer_rating_vote id="answer-#{@answer.id}-rating"
+            =@rating
+        .col-xs-3.col-sm-12.text-center
+          a class="answer-vote-action" data-type="json" data-remote="true" rel="nofollow" data-method="post" href="/answers/#{@answer.id}/negative_vote"DOWN
+        .col-xs-3.col-sm-12.text-center
+          a class="answer-vote-action" data-type="json" data-remote="true" rel="nofollow" data-method="delete" href="/answers/#{@answer.id}/re_vote" Re-Vote

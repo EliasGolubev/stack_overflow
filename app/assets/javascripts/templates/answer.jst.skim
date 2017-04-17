@@ -1,0 +1,28 @@
+.answer id="answer-#{@answer.id}"
+  .col-xs-12.col-sm-8
+    .row
+      .panel.panel-primary
+        .panel-body
+          .col-xs-12.col-md-11
+            .answer_rating_errors id="answer-#{@answer.id}-rating-errors"
+            .answer-body id="answer-show-body-#{@answer.id}"
+              =@answer.body
+            .attachments-answer-files
+              ul
+                - for attachment in @attachments
+                  .attachment id="attachment-#{attachment.id}"
+                    .col-xs-2
+                      li
+                        a href=attachment.with_meta.url =attachment.with_meta.filename
+                  
+                  .col-xs-2.pull-right
+                    -if gon.user_id == @answer.user_id
+                      a href="/attachments/#{attachment.id}" data-remote="true" data-method="delete" rel="nofollow" Delete            
+            ==JST["templates/answers/edit_answer_form"](answer: @answer)  
+          .col-xs-12.col-md-1          
+            ==JST["templates/answers/best_answer"](answer: @answer)
+
+  .col-xs-12.col-md-1
+    ==JST["templates/answers/vote"](answer: @answer, rating: @rating)
+
+               

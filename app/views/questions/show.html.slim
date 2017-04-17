@@ -1,7 +1,7 @@
 .row.page-header
   .col-xs-12.col-md-8
     .row
-      .question-show
+      .question-show id="#{@question.id}"
         .panel.panel-default
           .panel-heading
             h3 class="show-question-title" = @question.title
@@ -23,7 +23,7 @@
   .col-xs-12.col-md-1
     =render 'votes/question_vote', question: @question
 .row
-  .answers
+  .answers data-question="#{@question.id}"
     -@question.answers.each do |answer|
       -if !answer.id.nil?
         = render 'answers/answer', answer: answer

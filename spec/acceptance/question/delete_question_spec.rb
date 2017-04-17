@@ -26,7 +26,7 @@ feature 'User delete question', %q{
     expect(page).to_not have_content('Delete')
   end
 
-  fcontext "mulitple sessions" do
+  context "mulitple sessions" do
     given(:user){create(:user)}
     scenario "deletes question on another user's page", js: true do
       Capybara.using_session('user') do
@@ -57,8 +57,6 @@ feature 'User delete question', %q{
       Capybara.using_session('guest') do
         expect(page).to_not have_content('Question title text')
       end
-
-
     end
   end
 end
