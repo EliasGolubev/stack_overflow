@@ -3,8 +3,10 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, only: [:new, :create, :update, :destroy]
   before_action :load_question, only: [:show, :update, :destroy]
+  before_action :destroy_question, only: [:destroy]
 
   after_action :publish_question, only: [:create]
+
 
   def index
     @questions = Question.all
@@ -48,11 +50,15 @@ class QuestionsController < ApplicationController
 
   def publish_question
     return if @question.errors.any?
-    ActionCable.server.broadcast 'questions', 
-        ApplicationController.render(
-          partial:'questions/question',
-          locals: { question: @question }
-        )
+    ActionCable.server.broadcast 'questions',
+      render: ApplicationController.render(partial:'questions/question', locals: { question: @question }),
+      method: 'publish'
+  end
+
+  def destroy_question
+    ActionCable.server.broadcast 'questions',
+    question_id: @question.id,
+    method: 'destroy'
   end
 
   def question_params

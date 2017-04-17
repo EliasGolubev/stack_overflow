@@ -63,7 +63,7 @@ feature 'User create question', %q{
     expect(current_path).to eq new_user_session_path
   end
 
-  fcontext "mulitple sessions" do
+  context "mulitple sessions" do
     scenario "question appears on another user's page", js: true do
       Capybara.using_session('user') do
         sign_in(user)
