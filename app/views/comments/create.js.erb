@@ -1,0 +1,13 @@
+<% if @comment.errors.present? %>
+  <% @comment.errors.full_messages.each do |message| %>
+    $('.question-comment-errors').addClass('alert alert-danger').html('');
+    $('.question-comment-errors').html('<%= j message %>');
+  <% end %>
+<% else %>
+  $('.question-comment-errors').removeClass('alert alert-danger').html('');
+  $('#comment_body').val('');
+  $('.comments-texts').append("<div class='comment' id='comment-<%= @comment.id %>'>"
+    + "<div class='col-xs-10'> <%= @comment.body %> </div>"
+    + "<div class='col-xs-2'> <a format='js' data-remote='true' rel='nofollow' data-method='delete' href='/comments/<%= @comment.id %>'>Delete</a>"
+    + "</div></div>" );
+<% end %>

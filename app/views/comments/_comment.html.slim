@@ -1,0 +1,5 @@
+.comment id="comment-#{comment.id}" 
+  .col-xs-10
+    =comment.body
+  .col-xs-2
+    =link_to 'Delete', comment, method: :delete, remote: true, format: :js
