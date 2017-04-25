@@ -4,6 +4,6 @@
       .col-xs-10
         =comment.body
       .col-xs-2
-        -if current_user && current_user.author?(comment)
+        -if current_user&.author?(comment)
           =link_to 'Delete', comment, method: :delete, remote: true, format: :js
 .col-xs-8

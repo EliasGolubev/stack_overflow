@@ -10,9 +10,12 @@ feature 'Add comments to answer', %q{
   given(:answer) { create(:answer, question: question) }
   given(:answer2) { create(:answer, question: question) }
 
-  scenario 'create valid answer comments', js: true do 
+  before do 
     sign_in(user)
     visit question_path(question)
+  end
+  scenario 'create valid answer comments', js: true do 
+    
     fill_in "commentable-text-form-#{answer2.id}", with: 'Test text comments'
     click_on 'Create Comment'
 
@@ -20,8 +23,7 @@ feature 'Add comments to answer', %q{
   end
 
   scenario 'create no valid answer comments', js: true do 
-    sign_in(user)
-    visit question_path(question)
+    
     fill_in "commentable-text-form-#{answer2.id}", with: nil
     click_on "Create Comment"
 
