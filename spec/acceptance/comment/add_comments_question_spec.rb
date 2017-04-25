@@ -8,9 +8,13 @@ feature 'Add comments to question', %q{
   given(:question){ create(:question) }
   given(:user){ create(:user) }
 
-  scenario 'create valid question comments', js: true do 
+  before do 
     sign_in(user)
     visit question_path(question)
+  end
+
+  scenario 'create valid question comments', js: true do 
+    
     fill_in "commentable-text-form-#{question.id}", with: 'Test text comments'
     click_on 'Create Comment'
 
@@ -18,8 +22,7 @@ feature 'Add comments to question', %q{
   end
 
   scenario 'create no valid question comments', js: true do 
-    sign_in(user)
-    visit question_path(question)
+
     fill_in "commentable-text-form-#{question.id}", with: nil
     click_on "Create Comment"
 
