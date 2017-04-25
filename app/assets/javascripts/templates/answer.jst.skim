@@ -24,5 +24,7 @@
 
   .col-xs-12.col-md-1
     ==JST["templates/answers/vote"](answer: @answer, rating: @rating)
+  .row
+    ==JST["templates/comment"](commentable_id: @answer.id)
 
                

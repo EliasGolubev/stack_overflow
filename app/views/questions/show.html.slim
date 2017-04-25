@@ -13,23 +13,17 @@
               -if !@question.attachments.empty?
                 hr
                 .attachments-question-files
-                  = render 'attachments/attachments_show', resource: @question
-              br
-              .row
-                .panel.panel-default
-                  .panel-heading
-                    p Comments:
-                  .panel-body
-                    .col-xs-12.question-comments-block
-                      =render "comments/comments", commentable: @question
-              
+                  = render 'attachments/attachments_show', resource: @question              
             .col-xs-2.col-md-1
               - if current_user && @question.user_id == current_user.id
                 = render 'links', question: @question
 
       =render 'question_edit', question: @question
   .col-xs-12.col-md-1
-    =render 'votes/question_vote', question: @question     
+    =render 'votes/question_vote', question: @question
+  .row
+    .col-xs-12.col-sm-8.answer-comments-block id="comments-#{@question.id}"
+        =render "comments/comments", commentable: @question     
 .row
   .answers data-question="#{@question.id}"
     -@question.answers.each do |answer|

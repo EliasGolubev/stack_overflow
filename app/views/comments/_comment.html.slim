@@ -1,5 +1,9 @@
-.comment id="comment-#{comment.id}" 
-  .col-xs-10
-    =comment.body
-  .col-xs-2
-    =link_to 'Delete', comment, method: :delete, remote: true, format: :js
+.comment id="comment-#{comment.id}"
+  .panel.panel-default.comment-box
+    .panel-body
+      .col-xs-10
+        =comment.body
+      .col-xs-2
+        -if current_user && current_user.author?(comment)
+          =link_to 'Delete', comment, method: :delete, remote: true, format: :js
+.col-xs-8

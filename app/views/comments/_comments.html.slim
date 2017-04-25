@@ -1,5 +1,5 @@
 .comments
-  .comments-texts
+  .comments-texts id="comentable-#{commentable.id}"
     -commentable.comments.each do |comment|
       = render 'comments/comment', comment: comment
 .col-xs-8 

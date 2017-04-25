@@ -11,7 +11,6 @@
             -if !answer.attachments.empty?  
               .attachments-answer-files
                 = render 'attachments/attachments_show', resource: answer
-
             =render 'answers/answer_edit', answer: answer
           
           .col-xs-12.col-md-1
@@ -19,3 +18,8 @@
   
   .col-xs-12.col-md-1
     =render 'votes/answer_vote', answer: answer
+
+  .row
+    .col-xs-12.col-sm-8.answer-comments-block id="comments-#{answer.id}"
+      =render "comments/comments", commentable: answer
+

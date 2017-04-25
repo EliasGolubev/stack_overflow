@@ -1,4 +1,4 @@
-channelRemove = ->
+channelAnswerRemove = ->
   if (App.answer)
       App.cable.subscriptions.remove(App.answer)
       App.answer = null
@@ -20,12 +20,13 @@ createAnswerChannel = ->
         $('.answers').append(JST["templates/answer"]({
           answer: data['answer'], 
           attachments: data['attachments'], 
-          rating: data['rating']
+          rating: data['rating'],
+          commentable_id: data['answer'].id
         }))
 
       delete_answer: (answer_id) ->
         $("#answer-#{answer_id}").remove()
         $("#answer-vote-#{answer_id}").remove()
     
-$(document).on("turbolinks:load", channelRemove)
+$(document).on("turbolinks:load", channelAnswerRemove)
 $(document).on("turbolinks:load", createAnswerChannel)
