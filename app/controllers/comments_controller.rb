@@ -22,15 +22,20 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:body)
   end
 
-  def publish_comments
-    return if @comment.errors.any?
+  def commentable_name
+    params[:commentable]
+  end
 
-    ActionCable.server.broadcast("/questions/#{@question_id}/comments",
-      comentable_id: @comment.commentable_id,
-      comment: @comment)
+  def commentable_klass
+    commentable_name.classify.constantize
+  end
+
+  def set_commentable
+    @commentable = commentable_klass.find(params["#{commentable_name}_id"])
   end
 
   def get_question_id
+    
     if @commentable.class.name == "Question"
       @question_id = @commentable.id
     else
@@ -38,11 +43,12 @@ class CommentsController < ApplicationController
     end
   end
 
-  def set_commentable
-    params.each do |name, value|
-      if name =~ /(.+)_id$/
-        return @commentable = $1.classify.constantize.find(value)
-      end
-    end
+  def publish_comments
+    return if @comment.errors.any?
+
+    ActionCable.server.broadcast("/questions/#{@question_id}/comments",
+      comentable_id: @comment.commentable_id,
+      comment: @comment,
+      commentable_klass: @commentable.class.name)
   end
 end

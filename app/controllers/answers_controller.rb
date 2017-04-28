@@ -39,6 +39,7 @@ class AnswersController < ApplicationController
         answer: @answer,
         rating: @answer.rating,
         attachments: @answer.attachments.as_json(methods: :with_meta),
+        question_user_id: @question.user_id,
         method: 'publish')
   end
 

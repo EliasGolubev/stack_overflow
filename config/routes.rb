@@ -15,9 +15,9 @@ Rails.application.routes.draw do
   resources :questions, except: [:edit], concerns: [:votable] do
     resources :answers, except: [:index, :show], concerns: [:votable], shallow: true do
       patch :set_best, on: :member
-      resources :comments, only: [:create]
+      resources :comments, only: [:create], defaults: { commentable: 'answer' }
     end
-    resources :comments, only: [:create]
+    resources :comments, only: [:create], defaults: { commentable: 'question' }
   end
 
   mount ActionCable.server => '/cable'

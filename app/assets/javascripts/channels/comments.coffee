@@ -13,12 +13,9 @@ createCommentsChannel = ->
       @perform 'follow', question_id: questionId
     
     received: (data) ->
-      $('#comentable-'+data['comentable_id']).append(JST["templates/comments/comment"]({
-          comment: data['comment']
+      $('#commentable-'+ data['commentable_klass'] + '-' + data['comentable_id']).append(JST["templates/comments/comment"]({
+          comment: data['comment'],
         }))
-    
-    publish_comment: (data) ->
-      console.log('Publish comments channel')
 
 $(document).on("turbolinks:load", channelCommentsRemove)
 $(document).on("turbolinks:load", createCommentsChannel)

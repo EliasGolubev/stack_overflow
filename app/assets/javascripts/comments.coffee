@@ -11,4 +11,3 @@ $('.add-question-comments').click (e) ->
     $(this).html('Show comments')
     $(this).removeClass('cancel')
     comments.hide()
-  return undefined

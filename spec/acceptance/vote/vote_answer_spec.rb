@@ -7,7 +7,6 @@ feature 'Vote answer', %q{
 } do
   given!(:question){ create(:question) }
   given!(:answer_first){ create(:answer, question: question) }
-  given!(:answer_second){ create(:answer, question: question) }
   given(:user){ create(:user) }
 
   describe 'Author answer' do
@@ -19,35 +18,21 @@ feature 'Vote answer', %q{
     end
 
     scenario 'don\'t vote his answer', js: true do
-      within "#answer-vote-#{answer_first.id}" do
-        click_on 'UP'
-      end
-
-      within "#answer-#{answer_first.id}" do
-        expect(page).to have_content('You can\'t vote')
-      end
-
-      within "#answer-#{answer_second.id}" do
-        expect(page).to_not have_content('You can\'t vote')
+      within '.answers' do
+        expect(page).to_not have_content('UP')
       end
     end
 
     scenario 'don\'t re-vote answer', js: true do
-      within "#answer-vote-#{answer_first.id}" do
-        click_on 'DOWN'
-      end
-
-      within "#answer-#{answer_first.id}" do
-        expect(page).to have_content('You can\'t vote')
-      end
-
-      within "#answer-#{answer_second.id}" do
-        expect(page).to_not have_content('You can\'t vote')
+      within '.answers' do
+        expect(page).to_not have_content('DOWN')
       end
     end
   end
 
-  describe 'Non authoe question' do
+  describe 'Non author question' do
+    given!(:answer_second){ create(:answer, question: question) }
+
     before do
       sign_in(user)
       visit question_path(question)
@@ -137,48 +122,15 @@ feature 'Vote answer', %q{
     end
 
     scenario 'don\'t positive vote the answer', js: true do
-      within "#answer-vote-#{answer_first.id}" do
-        click_on 'UP'
-        wait_for_ajax
-
-        expect(page).to have_content('0')
-      end
-      within "#answer-#{answer_first.id}" do
-        expect(page).to have_content('You can\'t vote')
-      end
-      within "#answer-vote-#{answer_second.id}" do
-        expect(page).to_not have_content('You can\'t vote')
-      end
+      expect(page).to_not have_content('UP')
     end
 
     scenario 'don\'t negative vote the answer', js: true do
-      within "#answer-vote-#{answer_first.id}" do
-        click_on 'DOWN'
-        wait_for_ajax
-
-        expect(page).to have_content('0')
-      end
-      within "#answer-#{answer_first.id}" do
-        expect(page).to have_content('You can\'t vote')
-      end
-      within "#answer-vote-#{answer_second.id}" do
-        expect(page).to_not have_content('You can\'t vote')
-      end
+      expect(page).to_not have_content('DOWN')
     end
 
     scenario 'don\'t re-vote answer', js: true do
-      within "#answer-vote-#{answer_first.id}" do
-        click_on 'Re-Vote'
-        wait_for_ajax
-
-        expect(page).to have_content('0')
-      end
-      within "#answer-#{answer_first.id}" do
-        expect(page).to have_content('You can\'t re-vote')
-      end
-      within "#answer-vote-#{answer_second.id}" do
-        expect(page).to_not have_content('You can\'t re-vote')
-      end
+      expect(page).to_not have_content('Re-Vote')
     end
   end
 end

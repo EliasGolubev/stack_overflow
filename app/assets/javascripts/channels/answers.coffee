@@ -21,7 +21,9 @@ createAnswerChannel = ->
           answer: data['answer'], 
           attachments: data['attachments'], 
           rating: data['rating'],
-          commentable_id: data['answer'].id
+          commentable_id: data['answer'].id,
+          question_user_id: data['question_user_id'],
+          commentable_klass: 'Answer'
         }))
 
       delete_answer: (answer_id) ->

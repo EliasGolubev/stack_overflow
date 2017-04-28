@@ -10,7 +10,7 @@ RSpec.describe CommentsController, type: :controller do
     context 'with loggin user' do
       sign_in_user
       it 'save new comments in the database with valid attributes' do 
-        expect { post :create, comment: attributes_for(:comment), question_id: question, format: :js }.to change(Comment, :count).by(1)
+        expect { post :create, comment: attributes_for(:comment), commentable: 'question', question_id: question, format: :js }.to change(Comment, :count).by(1)
       end
     end
     context 'with non loggin user' do 
