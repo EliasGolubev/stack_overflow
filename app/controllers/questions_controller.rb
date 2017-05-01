@@ -4,6 +4,9 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :update, :destroy]
   before_action :load_question, only: [:show, :update, :destroy]
 
+  after_action :publish_question, only: [:create]
+
+
   def index
     @questions = Question.all
   end
@@ -33,8 +36,10 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy if current_user.author?(@question)
-
+    if current_user.author?(@question)
+      @question.destroy 
+      destroy_question
+    end
     redirect_to questions_path
   end
 
@@ -42,6 +47,19 @@ class QuestionsController < ApplicationController
 
   def load_question
     @question = Question.find(params[:id])
+  end
+
+  def publish_question
+    return if @question.errors.any?
+    ActionCable.server.broadcast 'questions',
+      render: ApplicationController.render(partial:'questions/question', locals: { question: @question }),
+      method: 'publish'
+  end
+
+  def destroy_question
+    ActionCable.server.broadcast 'questions',
+    question_id: @question.id,
+    method: 'destroy'
   end
 
   def question_params

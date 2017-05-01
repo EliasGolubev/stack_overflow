@@ -1,0 +1,6 @@
+.col-xs-12.col-sm-8.answer-comments-block id="comments-#{@commentable_id}"
+  .comments
+    .comments-texts id="commentable-#{@commentable_klass}-#{@commentable_id}"
+      
+    .col-xs-8
+      ==JST["templates/comments/form"](commentable_id: @commentable_id)

@@ -3,6 +3,9 @@ class AnswersController < ApplicationController
 
   before_action :authenticate_user!, only: [:create, :update, :destroy, :set_best]
   before_action :load_answer, only: [:update, :destroy, :set_best]
+  
+  after_action :destroy_answer, only: [:destroy]
+  after_action :publish_answer, only: [:create] 
 
   def create
     @question = Question.find(params[:question_id])
@@ -27,6 +30,24 @@ class AnswersController < ApplicationController
 
   def load_answer
     @answer = Answer.find(params[:id])
+  end
+
+  def publish_answer
+      return if @answer.errors.any?
+
+      ActionCable.server.broadcast("/questions/#{@question.id}/answers", 
+        answer: @answer,
+        rating: @answer.rating,
+        attachments: @answer.attachments.as_json(methods: :with_meta),
+        question_user_id: @question.user_id,
+        method: 'publish')
+  end
+
+  def destroy_answer
+    return if !current_user.author?(@answer)
+    ActionCable.server.broadcast("/questions/#{@answer.question_id}/answers",
+      answer_id: @answer.id,
+      method: 'delete')
   end
 
   def answer_params

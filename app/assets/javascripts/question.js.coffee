@@ -3,8 +3,6 @@ edit_question = ->
         e.preventDefault()
         $('.question-show').hide()
         $('.question-edit').show()
-        return undefined
-    return undefined
 
 $(document).ready(edit_question)
 $(document).on('page:load', edit_question)

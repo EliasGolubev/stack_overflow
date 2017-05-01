@@ -1,7 +1,7 @@
 .row.page-header
   .col-xs-12.col-md-8
     .row
-      .question-show
+      .question-show id="#{@question.id}"
         .panel.panel-default
           .panel-heading
             h3 class="show-question-title" = @question.title
@@ -13,8 +13,7 @@
               -if !@question.attachments.empty?
                 hr
                 .attachments-question-files
-                  = render 'attachments/attachments_show', resource: @question
-              hr
+                  = render 'attachments/attachments_show', resource: @question              
             .col-xs-2.col-md-1
               - if current_user && @question.user_id == current_user.id
                 = render 'links', question: @question
@@ -22,8 +21,11 @@
       =render 'question_edit', question: @question
   .col-xs-12.col-md-1
     =render 'votes/question_vote', question: @question
+  .row
+    .col-xs-12.col-sm-8.answer-comments-block id="comments-#{@question.id}"
+        =render "comments/comments", commentable: @question     
 .row
-  .answers
+  .answers data-question="#{@question.id}"
     -@question.answers.each do |answer|
       -if !answer.id.nil?
         = render 'answers/answer', answer: answer

@@ -1,0 +1,10 @@
+<% if @comment.errors.present? %>
+  <% @comment.errors.full_messages.each do |message| %>
+    $('.commentable-comment-errors').addClass('alert alert-danger').html('');
+    $('.commentable-comment-errors').html('<%= j message %>');
+  <% end %>
+<% else %>
+  $('.commentable-comment-errors').removeClass('alert alert-danger').html('');
+  commentableId = <%= @comment.commentable_id %>
+  $('#commentable-text-form-' + commentableId).val('');
+<% end %>

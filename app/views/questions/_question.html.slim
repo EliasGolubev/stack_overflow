@@ -1,10 +1,5 @@
-.row.list-group
+.row.list-group id="question-id-#{question.id}"
   .col-xs-12.list-group-item
     .col-xs-12.col-md-11
       h4
-        = question.title
-    .col-xs-2.col-md-1
-      =link_to 'Show', question
-    - if current_user && question.user_id == current_user.id
-      .col-xs-2.col-md-1  
-        = link_to 'Delete', question, method: :delete
+        =link_to "#{question.title}", question

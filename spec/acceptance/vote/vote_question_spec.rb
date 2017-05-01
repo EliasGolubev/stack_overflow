@@ -17,26 +17,15 @@ feature 'Vote question', %q{
     end
 
     scenario 'don\'t vote his question', js: true do
-      within '.question-vote' do
-        click_on 'UP'
-      end
-
-      within '.question-show' do 
-        expect(page).to have_content('You can\'t vote')
-      end
+      expect(page).to_not have_content('UP')
     end
-    scenario 'don\'t re-vote question', js: true do
-      within '.question-vote' do
-        click_on 'DOWN'
-      end
 
-      within '.question-show' do
-        expect(page).to have_content('You can\'t vote')
-      end
+    scenario 'don\'t re-vote question', js: true do
+      expect(page).to_not have_content('DOWN')
     end
   end
 
-  describe 'Non authoe question' do
+  describe 'Non author question' do
     before do
       sign_in(user)
       visit question_path(question)
@@ -110,42 +99,15 @@ feature 'Vote question', %q{
     end
 
     scenario 'don\'t positive vote the question', js: true do
-      within '.question-vote' do
-        click_on 'UP'
-        wait_for_ajax
-
-        expect(page).to have_content('0')
-      end
-
-      within '.question-show' do
-        expect(page).to have_content('You can\'t vote')
-      end
+      expect(page).to_not have_content('UP')
     end
 
     scenario 'don\'t negative vote the question', js: true do
-      within '.question-vote' do
-        click_on 'DOWN'
-        wait_for_ajax
-
-        expect(page).to have_content('0')
-      end
-
-      within '.question-show' do
-        expect(page).to have_content('You can\'t vote')
-      end
+     expect(page).to_not have_content('DOWN')
     end
 
     scenario 'don\'t re-vote question', js: true do
-      within '.question-vote' do
-        click_on 'Re-Vote'
-        wait_for_ajax
-
-        expect(page).to have_content('0')  
-      end
-
-      within '.question-show' do
-        expect(page).to have_content('You can\'t re-vote')
-      end
+      expect(page).to_not have_content('Re-Vote')
     end
   end
 end

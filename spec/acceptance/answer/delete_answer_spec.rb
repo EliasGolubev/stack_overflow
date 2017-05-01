@@ -33,4 +33,33 @@ feature 'Destroy answer', %q{
     expect(page).to have_content('answer text')
     expect(page).to_not have_content('Delete')
   end
+
+  context "mulitple sessions" do
+    scenario "delete answer on another user's page", js: true do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+      end
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+      Capybara.using_session('user') do 
+        fill_in 'Ask Answer', with:'ask text text'
+        click_on 'Ask'
+
+        expect(page).to have_content('ask text text')
+      end
+      Capybara.using_session('guest') do
+        expect(page).to have_content('ask text text')
+      end
+      Capybara.using_session('user') do
+        click_link 'Delete'
+
+        expect(page).to_not have_content('ask text text')
+      end
+      Capybara.using_session('guest') do
+        expect(page).to_not have_content('ask text text')
+      end
+    end
+  end
 end

@@ -1,0 +1,6 @@
+.comments
+  .comments-texts id="commentable-#{commentable.class}-#{commentable.id}"
+    -commentable.comments.each do |comment|
+      = render 'comments/comment', comment: comment
+.col-xs-8 
+  = render 'comments/form', commentable: commentable
