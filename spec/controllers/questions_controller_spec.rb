@@ -148,6 +148,11 @@ RSpec.describe QuestionsController, type: :controller do
       it 'don\'t delete question' do 
         expect{ delete :destroy, id: question }.to change(Question, :count).by(0)
       end
+
+      it 'redirect to index view' do 
+        delete :destroy, id: question.id
+        expect(response).to be_successful
+      end
     end
   end
 end
