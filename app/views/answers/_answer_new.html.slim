@@ -6,7 +6,7 @@
       .answer-errors
       =f.text_area :body, rows: 10, class: 'form-control'
 
-      = f.fields_for :attachments do |a|
+      = f.fields_for :attachments, @answer.attachments.build do |a|
       .links
         = link_to_add_association 'Add attachments', f, :attachments
 

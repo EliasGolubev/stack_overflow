@@ -28,6 +28,7 @@ feature 'User delete question', %q{
 
   context "mulitple sessions" do
     given(:user){create(:user)}
+    
     scenario "deletes question on another user's page", js: true do
       Capybara.using_session('user') do
         sign_in(user)

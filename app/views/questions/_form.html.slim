@@ -11,7 +11,7 @@
     =f.text_area :body, class: "form-control", rows: 15
 
   .form-group
-      = f.fields_for :attachments do |a|
+      = f.fields_for :attachments, @question.attachments.build do |a|
       .links
         = link_to_add_association 'Add attachments', f, :attachments
 

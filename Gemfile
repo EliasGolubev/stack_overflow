@@ -28,6 +28,7 @@ gem 'carrierwave'
 gem 'remotipart'
 gem "cocoon"
 gem 'gon'
+gem 'responders', '~> 2.0' 
 
 group :development, :test do
   gem 'pry-byebug'
