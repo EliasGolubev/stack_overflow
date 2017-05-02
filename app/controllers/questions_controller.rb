@@ -45,10 +45,6 @@ class QuestionsController < ApplicationController
     @answer = @question.answers.build
   end
 
-  def interpolation_options
-    { resource_name: 'New awesome question', username: current_user.username }
-  end
-
   def publish_question
     return if @question.errors.any?
     ActionCable.server.broadcast 'questions',
