@@ -17,14 +17,16 @@ class User < ApplicationRecord
     authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
     return authorization.user if authorization
 
-    username = auth.info[:username]
+    username = auth.info[:name]
     email = auth.info[:email]
     user = User.where(email: email).first
     if user
       user.create_authorization(auth)
     else
       password = Devise.friendly_token[0, 20]
-      user = User.create!(username: username, email: email, password: password, password_confirmation: password)
+      user = User.new(username: username, email: email, password: password, password_confirmation: password)
+      user.skip_confirmation!
+      user.save
       user.create_authorization(auth)
     end
     user

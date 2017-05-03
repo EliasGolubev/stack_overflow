@@ -64,8 +64,8 @@ RSpec.describe User, type: :model do
           expect(User.find_for_oauth(auth)).to eq user
         end
       end
-      fcontext 'with user does not exist' do
-        let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456', info: { username: 'New User', email: 'new@user.com' }) }
+      context 'with user does not exist' do
+        let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456', info: { name: 'John Doe', email: 'new@user.com' }) }
         it 'creates new user' do 
           expect { User.find_for_oauth(auth) }.to change(User, :count).by(1)
         end
@@ -79,7 +79,7 @@ RSpec.describe User, type: :model do
 
         it 'fills user username' do 
           user = User.find_for_oauth(auth)
-          expect(user.username).to eq auth.info.username
+          expect(user.username).to eq auth.info.name
         end
 
         it 'creates authorization for user' do 
