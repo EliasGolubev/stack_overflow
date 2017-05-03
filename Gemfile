@@ -43,6 +43,8 @@ group :development, :test do
   gem 'faker'
   gem 'factory_girl_rails'
   gem 'capybara-webkit', '= 1.1.0'
+  gem "letter_opener"
+  gem 'capybara-email'
 end
 
 group :development do
