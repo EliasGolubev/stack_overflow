@@ -8,9 +8,15 @@ feature 'User registration', %q{
 
   scenario 'User fill all registration field' do
     registration_user
+    open_email 'user@email.com'
+    current_email.click_link 'Confirm my account'
 
-    expect(page).to have_content('Welcome! You have signed up successfully.')
-    expect(current_path).to eq root_path
+    expect(page).to have_content('Your email address has been successfully confirmed.')
+    fill_in 'Email', with: 'user@email.com'
+    fill_in 'Password', with: '12345678'
+    click_on 'Log in'
+
+    expect(page).to have_content('Signed in successfully.')
   end
 
   scenario 'User not fill username' do
