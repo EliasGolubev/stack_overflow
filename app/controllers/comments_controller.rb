@@ -2,21 +2,25 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_commentable, only: [:create]
   before_action :get_question_id, only: [:create]
+  before_action :load_comment, only: [:destroy]
 
   after_action :publish_comments, only: [:create]
   
+  respond_to :js
+
   def create
-    @comment = @commentable.comments.build(comments_params)
-    @comment.user_id = current_user.id
-    @comment.save 
+    respond_with @comment = @commentable.comments.create(comments_params.merge(user_id: current_user.id))
   end
 
   def destroy
-    @comment = Comment.find(params[:id])
-    @comment.destroy if current_user.author?(@comment)
+    respond_with @comment.destroy if current_user.author?(@comment)
   end
 
   private
+
+  def load_comment
+    @comment = Comment.find(params[:id])
+  end
 
   def comments_params
     params.require(:comment).permit(:body)
@@ -34,8 +38,7 @@ class CommentsController < ApplicationController
     @commentable = commentable_klass.find(params["#{commentable_name}_id"])
   end
 
-  def get_question_id
-    
+  def get_question_id   
     if @commentable.class.name == "Question"
       @question_id = @commentable.id
     else

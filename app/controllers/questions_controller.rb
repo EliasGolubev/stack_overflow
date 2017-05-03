@@ -3,50 +3,46 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, only: [:new, :create, :update, :destroy]
   before_action :load_question, only: [:show, :update, :destroy]
+  before_action :build_answer, only: [:show]
+  before_action :destroy_question, only: [:destroy]
 
   after_action :publish_question, only: [:create]
 
+  respond_to :js
 
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
 
   def show
-    @answer = @question.answers.build
-    @answer.attachments.build
+    respond_with @question
   end
 
   def new
-    @question = Question.new
-    @question.attachments.build
+    respond_with(@question = Question.new)
   end
 
   def create
-    @question = current_user.questions.create(question_params)
-    if @question.save
-      redirect_to @question
-    else
-      render :new
-    end
+    respond_with @question = current_user.questions.create(question_params)
   end
 
   def update
     @question.update(question_params)
-    render :update
+    respond_with @question
   end
 
   def destroy
-    if current_user.author?(@question)
-      @question.destroy 
-      destroy_question
-    end
-    redirect_to questions_path
+    respond_with(@question.destroy) if current_user.author?(@question)
   end
 
   private
 
   def load_question
     @question = Question.find(params[:id])
+  end
+
+  def build_answer
+    @answer = @question.answers.build
   end
 
   def publish_question
@@ -59,7 +55,7 @@ class QuestionsController < ApplicationController
   def destroy_question
     ActionCable.server.broadcast 'questions',
     question_id: @question.id,
-    method: 'destroy'
+    method: 'destroy' if current_user.author?(@question)
   end
 
   def question_params
