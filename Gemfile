@@ -29,6 +29,8 @@ gem 'remotipart'
 gem "cocoon"
 gem 'gon'
 gem 'responders', '~> 2.0' 
+gem 'omniauth'
+gem 'omniauth-facebook'
 
 group :development, :test do
   gem 'pry-byebug'
