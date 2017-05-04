@@ -12,6 +12,10 @@ Rails.application.routes.draw do
     end
   end
 
+  devise_scope :user do 
+    post 'set_email', to: 'omniauth_callbacks#set_email'
+  end
+
   root to: 'questions#index'
   resources :questions, except: [:edit], concerns: [:votable] do
     resources :answers, except: [:index, :show], concerns: [:votable], shallow: true do

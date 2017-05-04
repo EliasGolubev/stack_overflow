@@ -16,18 +16,19 @@ class User < ApplicationRecord
   def self.find_for_oauth(auth)
     authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
     return authorization.user if authorization
-
-    username = auth.info[:name]
-    email = auth.info[:email]
+    
+    email = auth.info.try(:email)
     user = User.where(email: email).first
+    
     if user
       user.create_authorization(auth)
     else
+      username = auth.info.try(:name)
       password = Devise.friendly_token[0, 20]
       user = User.new(username: username, email: email, password: password, password_confirmation: password)
-      user.skip_confirmation!
-      user.save
-      user.create_authorization(auth)
+      user.skip_confirmation! if auth.provider == 'facebook'
+      user.save 
+      user.create_authorization(auth) if user.persisted?
     end
     user
   end
