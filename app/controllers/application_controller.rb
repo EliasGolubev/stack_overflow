@@ -9,6 +9,12 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_paramters, if: :devise_controller?
   before_action :gon_user, unless: :devise_controller?
 
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, alert: exception.message
+  end
+
+  check_authorization
+
   protected
 
   def configure_permitted_paramters
