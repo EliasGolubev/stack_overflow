@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+
   resources :attachments, only: [:destroy]
   resources :comments, only: [:destroy]
 
@@ -9,6 +10,10 @@ Rails.application.routes.draw do
       post 'negative_vote'
       delete 're_vote'
     end
+  end
+
+  devise_scope :user do 
+    post 'set_email', to: 'omniauth_callbacks#set_email'
   end
 
   root to: 'questions#index'

@@ -29,6 +29,9 @@ gem 'remotipart'
 gem "cocoon"
 gem 'gon'
 gem 'responders', '~> 2.0' 
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 
 group :development, :test do
   gem 'pry-byebug'
@@ -40,6 +43,8 @@ group :development, :test do
   gem 'faker'
   gem 'factory_girl_rails'
   gem 'capybara-webkit', '= 1.1.0'
+  gem "letter_opener"
+  gem 'capybara-email'
 end
 
 group :development do

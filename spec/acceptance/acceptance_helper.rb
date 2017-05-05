@@ -1,11 +1,16 @@
 require 'rails_helper'
+require 'capybara/email/rspec'
 
-RSpec.configure do |config|
-  Capybara.javascript_driver = :webkit
-  Capybara.server = :puma
-  
+Capybara.javascript_driver = :webkit
+
+Capybara.server = :puma
+
+OmniAuth.config.test_mode = true
+
+RSpec.configure do |config|  
   config.include AcceptanceMacros, type: :feature 
   config.include WaitForAjax, type: :feature
+  config.include OmniauthMacros, type: :feature
 
   config.use_transactional_fixtures = false
 
