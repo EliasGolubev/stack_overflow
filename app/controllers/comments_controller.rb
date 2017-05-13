@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    respond_with @comment.destroy if current_user.author?(@comment)
+    respond_with @comment.destroy
   end
 
   private

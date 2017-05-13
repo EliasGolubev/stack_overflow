@@ -4,6 +4,8 @@ class Ability
   attr_reader :user
 
   def initialize(user)
+    alias_action :positive_vote, :negative_vote, :re_vote, to: :vote
+
     @user = user
 
     if user
@@ -23,7 +25,10 @@ class Ability
 
   def user_abilities
     guest_abilities
-    can :create, [Question, Answer, Comment]
-    can [:update, :destroy], [Question, Answer, Comment], user: user
+    can :create, [Question, Answer, Comment, Attachment]
+    can [:update, :destroy], [Question, Answer, Comment], user: @user
+    can :destroy, Attachment, attachmentable: { user: @user }
+    can :set_best, [Answer]{ |answer| user.author?(answer.question) }
+    can :vote, [Question, Answer] { |votable| !@user.author?(votable) }
   end
 end

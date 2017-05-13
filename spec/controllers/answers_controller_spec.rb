@@ -35,7 +35,7 @@ RSpec.describe AnswersController, type: :controller do
     context 'with user is autor answer' do
       sign_in_user
       let(:answer){ create(:answer, question: question, user: @user) }
-
+      
       it 'assings the requested answer to @answer' do
         patch :update, id: answer, answer: attributes_for(:answer), format: :js
         expect(assigns(:answer)).to eq answer

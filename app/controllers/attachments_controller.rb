@@ -7,7 +7,7 @@ class AttachmentsController < ApplicationController
   authorize_resource
 
   def destroy
-    respond_with(@attachment.destroy) if current_user.author?(@attachment.attachmentable)
+    respond_with(@attachment.destroy)
   end
 
   private

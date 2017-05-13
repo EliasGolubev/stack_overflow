@@ -81,7 +81,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    sign_in_user
+    before { sign_in user }
     
     context 'with valid attributes' do 
 
@@ -149,9 +149,9 @@ RSpec.describe QuestionsController, type: :controller do
         expect{ delete :destroy, id: question }.to change(Question, :count).by(0)
       end
 
-      it 'redirect to index view' do 
+      it 'show alert' do 
         delete :destroy, id: question.id
-        expect(response).to be_successful
+        expect(flash[:alert]).to be_present
       end
     end
   end
