@@ -15,7 +15,7 @@
                 .attachments-question-files
                   = render 'attachments/attachments_show', resource: @question              
             .col-xs-2.col-md-1
-              - if current_user && @question.user_id == current_user.id
+              - if can?(:edit, @question)
                 = render 'links', question: @question
 
       =render 'question_edit', question: @question

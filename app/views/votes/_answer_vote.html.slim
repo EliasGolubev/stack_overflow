@@ -1,4 +1,4 @@
-- if current_user && !current_user.author?(answer)
+- if can?(:vote, answer)
   .answer-vote id="answer-vote-#{answer.id}"
     .row
       .col-xs-12.col-sm-1
