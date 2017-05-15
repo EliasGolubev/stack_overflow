@@ -6,6 +6,6 @@ p
         li
           .col-xs-2
             = link_to a.file.identifier, a.file.url
-          - if current_user&.author?(resource)
+          - if can?(:destroy, resource)
             .col-xs-2.pull-right
               = link_to 'Delete', a, method: :delete, remote: true

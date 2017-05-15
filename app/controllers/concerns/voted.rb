@@ -5,6 +5,8 @@ module Voted
     before_action :load_votable, only: [:positive_vote, :negative_vote, :re_vote]
     before_action :author_votable_vote, only: [:positive_vote, :negative_vote]
     before_action :author_votable_re_vote, only: [:re_vote]
+
+    authorize_resource
   end
 
   def positive_vote

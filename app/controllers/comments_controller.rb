@@ -8,12 +8,14 @@ class CommentsController < ApplicationController
   
   respond_to :js
 
+  authorize_resource
+
   def create
     respond_with @comment = @commentable.comments.create(comments_params.merge(user_id: current_user.id))
   end
 
   def destroy
-    respond_with @comment.destroy if current_user.author?(@comment)
+    respond_with @comment.destroy
   end
 
   private

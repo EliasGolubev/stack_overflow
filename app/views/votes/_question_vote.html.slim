@@ -1,4 +1,4 @@
-- if current_user && !current_user.author?(@question)
+- if can?(:vote, @question)
   .row
     .question-vote
       .col-xs-12.col-sm-1

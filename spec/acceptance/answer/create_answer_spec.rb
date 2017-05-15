@@ -24,7 +24,7 @@ feature 'User create answer', %q{
     visit question_path(question)
     click_on 'Ask'
     
-    expect(page).to have_content('You need to sign in or sign up before continuing.')
+    expect(page).to have_content('You are not authorized to access this page.')
   end
 
   scenario 'User try to create invalid answer', js: true do 

@@ -10,20 +10,22 @@ class AnswersController < ApplicationController
 
   respond_to :js
 
+  authorize_resource
+
   def create
     respond_with @answer = @question.answers.create(answer_params.merge(user_id: current_user.id))
   end
 
   def update
-    respond_with @answer.update(answer_params) if current_user.author?(@answer)
+    respond_with @answer.update(answer_params)
   end
 
   def destroy
-    respond_with @answer.destroy if current_user.author?(@answer)
+    respond_with @answer.destroy
   end
 
   def set_best
-    respond_with @answer.set_best if !@answer.best? && current_user.author?(@answer.question)
+    respond_with @answer.set_best if !@answer.best?
   end
 
   private

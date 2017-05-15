@@ -10,6 +10,8 @@ class QuestionsController < ApplicationController
 
   respond_to :js
 
+  authorize_resource
+
   def index
     respond_with(@questions = Question.all)
   end
@@ -32,7 +34,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    respond_with(@question.destroy) if current_user.author?(@question)
+    respond_with(@question.destroy)
   end
 
   private

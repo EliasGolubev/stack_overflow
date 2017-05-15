@@ -59,8 +59,8 @@ feature 'User create question', %q{
   scenario 'Not logged user can\'t create question' do 
     visit new_question_path
     
-    expect(page).to have_content('You need to sign in or sign up before continuing.')
-    expect(current_path).to eq new_user_session_path
+    expect(page).to have_content('You are not authorized to access this page.')
+    expect(current_path).to eq root_path
   end
 
   context "mulitple sessions" do
