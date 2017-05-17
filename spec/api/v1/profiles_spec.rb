@@ -24,6 +24,10 @@ describe 'Profile API' do
         expect(response).to be_success
       end
 
+      it 'returns current user with valid json schema attributes' do 
+        expect(response).to match_response_schema("user")
+      end
+
       %w(id username email created_at updated_at admin).each do |attr|
         it "contains #{attr}" do 
           expect(response.body).to be_json_eql(me.send(attr.to_sym).to_json).at_path(attr)
@@ -75,6 +79,10 @@ describe 'Profile API' do
             expect(response.body).not_to have_json_path("#{i}/#{attr}")
           end
         end
+      end
+
+      it 'returns users with valid json schema attributes' do 
+        expect(response).to match_response_array_schema("user")
       end
     end
   end

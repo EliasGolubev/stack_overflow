@@ -135,6 +135,8 @@ GEM
       railties (>= 3.1.0)
       turbolinks
     json (2.0.4)
+    json-schema (2.8.0)
+      addressable (>= 2.4)
     json_spec (1.1.4)
       multi_json (~> 1.0)
       rspec (>= 2.0, < 4.0)
@@ -372,6 +374,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   jquery-turbolinks
+  json-schema
   json_spec
   launchy
   letter_opener
