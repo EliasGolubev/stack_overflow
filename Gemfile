@@ -63,6 +63,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'database_cleaner'
   gem 'fuubar'
+  gem 'json_spec'
 end  
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

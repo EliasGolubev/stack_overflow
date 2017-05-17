@@ -17,6 +17,14 @@ Rails.application.routes.draw do
     post 'set_email', to: 'omniauth_callbacks#set_email'
   end
 
+  namespace :api do 
+    namespace :v1 do
+      resource :profiles do 
+        get :me, on: :collection
+      end
+    end
+  end
+
   root to: 'questions#index'
   resources :questions, except: [:edit], concerns: [:votable] do
     resources :answers, except: [:index, :show], concerns: [:votable], shallow: true do
