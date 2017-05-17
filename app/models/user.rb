@@ -13,6 +13,8 @@ class User < ApplicationRecord
 
   validates :username, presence: true
 
+  scope :all_another_users, -> (user) { where.not(id: user.id) }
+
   def self.find_for_oauth(auth)
     authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
     return authorization.user if authorization
