@@ -13,13 +13,13 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_scope :user do 
+  devise_scope :user do
     post 'set_email', to: 'omniauth_callbacks#set_email'
   end
 
-  namespace :api do 
+  namespace :api do
     namespace :v1 do
-      resource :profiles do 
+      resource :profiles do
         get :me, on: :collection
         get :list, on: :collection
       end

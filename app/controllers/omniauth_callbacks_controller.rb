@@ -1,11 +1,9 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_action :omniauth_common
 
-  def facebook
-  end
+  def facebook; end
 
-  def twitter
-  end
+  def twitter; end
 
   private
 
@@ -20,13 +18,13 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       session['provider'] = auth.provider
       session['uid'] = auth.uid
       session['name'] = auth.info.name
-      render 'omniauth_callbacks/set_email'  
+      render 'omniauth_callbacks/set_email'
     else
-      flash[:notice] = "Invalid provider"
+      flash[:notice] = 'Invalid provider'
     end
   end
 
   def new_auth
-    OmniAuth::AuthHash.new(provider: session['provider'], uid: session['uid'], info: { name: session['name'],email: params[:email] })
+    OmniAuth::AuthHash.new(provider: session['provider'], uid: session['uid'], info: { name: session['name'], email: params[:email] })
   end
 end

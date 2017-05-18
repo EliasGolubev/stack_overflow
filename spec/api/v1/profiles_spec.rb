@@ -33,11 +33,6 @@ describe 'Profile API' do
           expect(response.body).to be_json_eql(me.send(attr.to_sym).to_json).at_path(attr)
         end
       end
-      %w(password encrypted_password).each do |attr|
-        it "does not contain #{attr}" do 
-          expect(response.body).to_not have_json_path(attr)
-        end
-      end
     end
   end
 
@@ -69,14 +64,6 @@ describe 'Profile API' do
         it "contains #{attr}" do 
           other_users.each_with_index do |user, i|
             expect(response.body).to be_json_eql(user.send(attr.to_sym).to_json).at_path("#{i}/#{attr}")
-          end
-        end
-      end
-
-      %w(password encrypted_password).each do |attr|
-        it "does not contain #{attr}" do 
-          other_users.each_index do |i|
-            expect(response.body).not_to have_json_path("#{i}/#{attr}")
           end
         end
       end

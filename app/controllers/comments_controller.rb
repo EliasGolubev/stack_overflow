@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
   before_action :load_comment, only: [:destroy]
 
   after_action :publish_comments, only: [:create]
-  
+
   respond_to :js
 
   authorize_resource
@@ -40,20 +40,20 @@ class CommentsController < ApplicationController
     @commentable = commentable_klass.find(params["#{commentable_name}_id"])
   end
 
-  def get_question_id   
-    if @commentable.class.name == "Question"
-      @question_id = @commentable.id
-    else
-      @question_id = @commentable.question_id
-    end
+  def get_question_id
+    @question_id = if @commentable.class.name == 'Question'
+                     @commentable.id
+                   else
+                     @commentable.question_id
+                   end
   end
 
   def publish_comments
     return if @comment.errors.any?
 
     ActionCable.server.broadcast("/questions/#{@question_id}/comments",
-      comentable_id: @comment.commentable_id,
-      comment: @comment,
-      commentable_klass: @commentable.class.name)
+                                 comentable_id: @comment.commentable_id,
+                                 comment: @comment,
+                                 commentable_klass: @commentable.class.name)
   end
 end

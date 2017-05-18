@@ -34,7 +34,7 @@ class Ability
     can :create, [Question, Answer, Comment, Attachment]
     can [:update, :destroy], [Question, Answer, Comment], user: @user
     can :destroy, Attachment, attachmentable: { user: @user }
-    can :set_best, [Answer]{ |answer| user.author?(answer.question) }
+    can :set_best, [Answer] { |answer| user.author?(answer.question) }
     can :vote, [Question, Answer] { |votable| !@user.author?(votable) }
   end
 end

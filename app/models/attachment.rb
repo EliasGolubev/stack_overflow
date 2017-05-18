@@ -4,6 +4,6 @@ class Attachment < ApplicationRecord
   mount_uploader :file, FileUploader
 
   def with_meta
-    Hash["filename", file.filename, "url", file.url]
+    Hash['filename', file.filename, 'url', file.url]
   end
 end
