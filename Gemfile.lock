@@ -83,6 +83,8 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.3)
+    doorkeeper (4.2.5)
+      railties (>= 4.2)
     erubis (2.7.0)
     execjs (2.7.0)
     factory_girl (4.8.0)
@@ -133,6 +135,11 @@ GEM
       railties (>= 3.1.0)
       turbolinks
     json (2.0.4)
+    json-schema (2.8.0)
+      addressable (>= 2.4)
+    json_spec (1.1.4)
+      multi_json (~> 1.0)
+      rspec (>= 2.0, < 4.0)
     jwt (1.5.6)
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -358,6 +365,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   database_cleaner
   devise
+  doorkeeper
   factory_girl_rails
   faker
   fuubar
@@ -366,6 +374,8 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   jquery-turbolinks
+  json-schema
+  json_spec
   launchy
   letter_opener
   listen (~> 3.0.5)

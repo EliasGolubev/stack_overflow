@@ -33,6 +33,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'cancancan'
+gem 'doorkeeper'
 
 group :development, :test do
   gem 'pry-byebug'
@@ -62,6 +63,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'database_cleaner'
   gem 'fuubar'
+  gem 'json_spec'
+  gem "json-schema"
 end  
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

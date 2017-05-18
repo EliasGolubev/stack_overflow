@@ -23,12 +23,18 @@ class Ability
     can :manage, :all
   end
 
+  def api_abilities
+    can :me, User, id: @user.id
+    can :list, User
+  end
+
   def user_abilities
+    api_abilities
     guest_abilities
     can :create, [Question, Answer, Comment, Attachment]
     can [:update, :destroy], [Question, Answer, Comment], user: @user
     can :destroy, Attachment, attachmentable: { user: @user }
-    can :set_best, [Answer]{ |answer| user.author?(answer.question) }
+    can :set_best, [Answer] { |answer| user.author?(answer.question) }
     can :vote, [Question, Answer] { |votable| !@user.author?(votable) }
   end
 end

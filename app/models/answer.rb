@@ -10,7 +10,7 @@ class Answer < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank
 
-  default_scope -> { order("best DESC") }
+  default_scope -> { order('best DESC') }
 
   def set_best
     transaction do

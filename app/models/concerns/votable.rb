@@ -27,6 +27,6 @@ module Votable
   end
 
   def re_vote(user)
-    votes.where(user:user).destroy_all
+    votes.where(user: user).destroy_all
   end
 end

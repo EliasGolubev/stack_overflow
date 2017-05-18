@@ -50,14 +50,16 @@ class QuestionsController < ApplicationController
   def publish_question
     return if @question.errors.any?
     ActionCable.server.broadcast 'questions',
-      render: ApplicationController.render(partial:'questions/question', locals: { question: @question }),
-      method: 'publish'
+                                 render: ApplicationController.render(partial: 'questions/question', locals: { question: @question }),
+                                 method: 'publish'
   end
 
   def destroy_question
-    ActionCable.server.broadcast 'questions',
-    question_id: @question.id,
-    method: 'destroy' if current_user.author?(@question)
+    if current_user.author?(@question)
+      ActionCable.server.broadcast 'questions',
+                                   question_id: @question.id,
+                                   method: 'destroy'
+    end
   end
 
   def question_params

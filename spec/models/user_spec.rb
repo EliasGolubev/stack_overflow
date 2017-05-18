@@ -96,4 +96,17 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '.all_another_users' do 
+    let!(:current_user) { create(:user) }
+    let!(:users) { create_list(:user, 3) }
+
+    it 'return all another users to current user' do 
+      users_array = User.all_another_users(current_user)
+      users.each do |user|
+        expect(users_array).to include user
+      end
+      expect(users_array).to_not include current_user
+    end
+  end
 end 
