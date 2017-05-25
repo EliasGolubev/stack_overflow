@@ -1,0 +1,9 @@
+p Hi, #{@user.username}!
+
+- if @resources.empty?
+   p Yesterday no questions were created
+- else
+  p List of questions created yesterday:
+  ul
+    - @resources.each do |res|
+      li = link_to "#{res.title}", res
