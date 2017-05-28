@@ -1,10 +1,10 @@
 class AnswerNoticeMailer < ApplicationMailer
-  def answer_notice(answer)
+  def answer_notice(user, answer)
     @answer = answer
     @question = answer.question
     @user = answer.user
-    @author = @question.user
+    @author = user
 
-    mail(to: @author.email, subject: "New answer fo #{@question.title}")
+    mail(to: @author.email, subject: "New answer for #{@question.title}")
   end
 end

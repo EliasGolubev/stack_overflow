@@ -11,11 +11,19 @@ class Question < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank
 
+  after_create :subscribe_author
+
   def subscribe?(user)
-    self.subscriptions.where(user_id: user.id).present?
+    subscriptions.where(user_id: user.id).present?
   end
 
   def subscription(user)
-    self.subscriptions.where(user_id: user.id).first
+    subscriptions.where(user_id: user.id).first
+  end
+
+  private 
+
+  def subscribe_author
+    subscriptions.create(user_id: user.id)
   end
 end

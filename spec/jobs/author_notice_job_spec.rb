@@ -2,15 +2,15 @@ require 'rails_helper'
 
 RSpec.describe AuthorNoticeJob, type: :job do
   include ActiveJob::TestHelper
+  
+  let!(:question){ create(:question) }
+  let!(:subscription){ create_list(:subscription, 2, question: question) }
+  let!(:answer){ create(:answer, question: question) }
 
-  let(:users){ create_list(:user, 2) }
-  let(:author){ users.first }
-  let(:other){ users.last }
-  let(:question){ create(:question, user: author) }
-  let(:answer){ create(:answer, question: question, user: other) }
-
-  it 'sends answer notice with author' do 
-    expect(AnswerNoticeMailer).to receive(:answer_notice).with(answer).and_call_original
+  it 'sends answer notice with subscription user' do 
+    answer.question.subscriptions.each do |subscription|
+      expect(AnswerNoticeMailer).to receive(:answer_notice).with(subscription.user, answer).and_call_original
+    end
     AuthorNoticeJob.perform_now(answer)
   end
 end

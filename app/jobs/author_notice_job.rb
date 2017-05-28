@@ -2,6 +2,8 @@ class AuthorNoticeJob < ApplicationJob
   queue_as :default
 
   def perform(answer)
-    AnswerNoticeMailer.answer_notice(answer).deliver_later
+    answer.question.subscriptions.find_each do |subscription|
+      AnswerNoticeMailer.answer_notice(subscription.user, answer).deliver_later if answer.user_id != subscription.user_id
+    end
   end
 end

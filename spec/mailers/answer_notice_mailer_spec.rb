@@ -4,10 +4,10 @@ RSpec.describe AnswerNoticeMailer, type: :mailer do
   let(:users){ create_list(:user, 2) }
   let(:question){ create(:question, user: users.first) }
   let(:answer) { create(:answer, user: users.last, question: question) }
-  let(:mail) { AnswerNoticeMailer.answer_notice(answer).deliver_now } 
+  let(:mail) { AnswerNoticeMailer.answer_notice(users.first, answer).deliver_now } 
 
   it 'renders the subject' do 
-    expect(mail.subject).to eq("New answer fo #{question.title}")
+    expect(mail.subject).to eq("New answer for #{question.title}")
   end
 
   it 'renders the receiver email' do 
