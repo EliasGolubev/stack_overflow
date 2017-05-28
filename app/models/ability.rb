@@ -31,10 +31,11 @@ class Ability
   def user_abilities
     api_abilities
     guest_abilities
-    can :create, [Question, Answer, Comment, Attachment]
-    can [:update, :destroy], [Question, Answer, Comment], user: @user
+    can :create, [Question, Answer, Comment, Attachment, Subscription]
+    can [:update, :destroy], [Question, Answer, Comment, Subscription], user: @user
     can :destroy, Attachment, attachmentable: { user: @user }
     can :set_best, [Answer] { |answer| user.author?(answer.question) }
     can :vote, [Question, Answer] { |votable| !@user.author?(votable) }
+    can :subscribe, Question
   end
 end

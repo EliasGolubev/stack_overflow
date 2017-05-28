@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       resources :comments, only: [:create], defaults: { commentable: 'answer' }
     end
     resources :comments, only: [:create], defaults: { commentable: 'question' }
+    resources :subscriptions, only: [:create, :destroy], shallow: :true
   end
 
   mount ActionCable.server => '/cable'
