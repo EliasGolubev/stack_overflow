@@ -26,5 +26,17 @@ feature 'Create subscriptions with question' do
         expect(page).to have_link 'Unsubscribe'
       end
     end
+
+    scenario 'can unsubscribe with question', js: true do 
+      sign_in user
+      visit question_path(question)
+      within '.question-show' do 
+        click_on 'Subscribe'
+        wait_for_ajax
+        expect(page).to have_link 'Unsubscribe'
+        click_on 'Unsubscribe'
+        expect(page).to have_link 'Subscribe'
+      end
+    end
   end
 end
