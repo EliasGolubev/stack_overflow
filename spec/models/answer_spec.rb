@@ -1,5 +1,4 @@
 require 'rails_helper'
-require_relative 'concerns/votable_spec'
 
 RSpec.describe Answer, type: :model do
   it_behaves_like "votable"
@@ -34,6 +33,24 @@ RSpec.describe Answer, type: :model do
 
       expect(answer1.best).to eq false
       expect(answer2.best).to eq true
+    end
+  end
+
+  describe 'Notification author question after create answer' do 
+    let(:user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+    let(:answer){ build :answer, question: question }
+
+    it 'run notification job after answer create' do 
+      expect(AuthorNoticeJob).to receive(:perform_later)
+      answer.save!
+    end
+
+    it 'don\'t run notification job after answer update' do 
+      answer.save!
+
+      expect(AuthorNoticeJob).to_not receive(:perform_later)
+      answer.update!(body: 'answer new body')
     end
   end
 end

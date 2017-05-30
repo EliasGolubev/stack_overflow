@@ -10,6 +10,8 @@ class Answer < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank
 
+  after_create_commit { AuthorNoticeJob.perform_later(self) }
+
   default_scope -> { order('best DESC') }
 
   def set_best

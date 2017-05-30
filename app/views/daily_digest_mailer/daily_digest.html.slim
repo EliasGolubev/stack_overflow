@@ -1,0 +1,9 @@
+p Hi, #{@user.username}!
+
+- if @questions.empty?
+   p Yesterday no questions were created
+- else
+  p List of questions created yesterday:
+  ul
+    - @questions.each do |question|
+      li = link_to "#{question.title}", question

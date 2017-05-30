@@ -5,6 +5,7 @@
         .panel.panel-default
           .panel-heading
             h3 class="show-question-title" = @question.title
+            = render 'subscriptions/subscription_button', question: @question
           .panel-body
             .col-xs-12.col-md-11
               .question_rating_errors
