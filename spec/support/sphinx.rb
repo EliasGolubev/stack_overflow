@@ -9,21 +9,3 @@ module SphinxHelpers
     Dir[Rails.root.join(ThinkingSphinx::Test.config.indices_location, '*.{new,tmp}*')].empty?
   end
 end
-
-RSpec.configure do |config|
-  config.include SphinxHelpers, type: :feature
-  config.include SphinxHelpers, type: :sphinx
-
-  config.before(:each, type: :sphinx) do
-    DatabaseCleaner.strategy = :deletion
-  end
-
-
-  config.before(:suite) do
-    # Ensure sphinx directories exist for the test environment
-    ThinkingSphinx::Test.init
-    # Configure and start Sphinx, and automatically
-    # stop Sphinx at the end of the test suite.
-    ThinkingSphinx::Test.start_with_autostop
-  end
-end
