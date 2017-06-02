@@ -41,6 +41,8 @@ Rails.application.routes.draw do
     resources :subscriptions, only: [:create, :destroy], shallow: :true
   end
 
+  resource :search, only: :show
+
   mount ActionCable.server => '/cable'
   
   authenticate :user, lambda { |u| u.admin? } do 
