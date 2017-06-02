@@ -3,6 +3,7 @@ class Search
 
   def self.find(query, resourse)
     return nil if query.try(:blank?) || !RESOURSES.include?(resourse)
+    query = ThinkingSphinx::Query.escape(query)
     resourse == 'All' ? ThinkingSphinx.search(query) : ThinkingSphinx.search(query, classes: [model_klass(resourse)])
   end
 
