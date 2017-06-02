@@ -12,6 +12,7 @@ RSpec.configure do |config|
   config.include WaitForAjax, type: :feature
   config.include OmniauthMacros, type: :feature
   config.include SphinxHelpers, type: :feature
+  config.include JavascriptHelper, type: :feature
 
   config.use_transactional_fixtures = false
 

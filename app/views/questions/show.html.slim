@@ -10,7 +10,7 @@
             .col-xs-12.col-md-11
               .question_rating_errors
               .question-show-body
-                = @question.body
+                = @question.body.html_safe
               -if !@question.attachments.empty?
                 hr
                 .attachments-question-files

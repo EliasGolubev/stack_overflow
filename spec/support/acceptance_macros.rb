@@ -35,7 +35,7 @@ module AcceptanceMacros
     param = DEFAULT_QUESTION_FORM.merge(param)
 
     fill_in 'Title',          with: param[:title]
-    fill_in 'Question text',  with: param[:body]
+    fill_in_trix_editor('question_body_trix_input_question', param[:body])
 
     click_on 'Ask question'   if param[:action] == 'new'
     click_on 'Edit question'  if param[:action] == 'edit'

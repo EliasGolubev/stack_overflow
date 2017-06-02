@@ -41,7 +41,7 @@ feature 'User edit question', %q{
       scenario 'edit question', js: true do
         click_on 'Edit'
         fill_in 'Title', with: 'New title question'
-        fill_in 'Question text', with: 'New body question'
+        fill_in_trix_editor("question_body_trix_input_question_#{question.id}", 'New body question')
         click_on 'Edit question'
 
         expect(page).to have_content('New title question')
@@ -53,7 +53,7 @@ feature 'User edit question', %q{
       scenario 'don\'t fill Title', js: true do
         click_on 'Edit'
         fill_in 'Title', with: nil
-        fill_in 'Question text', with: 'New body question'
+        fill_in_trix_editor("question_body_trix_input_question_#{question.id}", 'New body question')
         click_on 'Edit question'
 
         expect(page).to have_content('Title can\'t be blank')
@@ -62,7 +62,7 @@ feature 'User edit question', %q{
       scenario 'don\'t fill Question text', js: true do
         click_on 'Edit'
         fill_in 'Title', with: 'New title question'
-        fill_in 'Question text', with: nil
+        fill_in_trix_editor("question_body_trix_input_question_#{question.id}", nil)
         click_on 'Edit question'
 
         expect(page).to have_content('Body can\'t be blank')
@@ -71,7 +71,7 @@ feature 'User edit question', %q{
       scenario 'don\'t fill Title and Question text', js:true do
         click_on 'Edit'
         fill_in 'Title', with: nil
-        fill_in 'Question text', with: nil
+        fill_in_trix_editor("question_body_trix_input_question_#{question.id}", nil)
         click_on 'Edit question'
 
         expect(page).to have_content('Title can\'t be blank')
