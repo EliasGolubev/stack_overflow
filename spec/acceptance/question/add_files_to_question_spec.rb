@@ -12,7 +12,7 @@ feature 'Add files to question', %q{
     sign_in user
     visit new_question_path
     fill_in 'Title',          with: 'Test question'
-    fill_in 'Question text',  with: 'Test text question'
+    fill_in_trix_editor('question_body_trix_input_question', 'Test text question')
     click_on 'Add attachments'
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
   end

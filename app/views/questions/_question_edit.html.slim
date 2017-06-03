@@ -7,6 +7,6 @@
       .form-group.panel-body
         = f.label :body, 'Question text'
         .errors-question
-        = f.text_area :body, class: "form-control", rows: 6
+        = f.trix_editor :body, class: "editor", rows: 6
       .actions
         = f.submit 'Edit question', class: 'btn btn-default'

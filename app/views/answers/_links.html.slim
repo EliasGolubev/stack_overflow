@@ -1,0 +1,7 @@
+.btn-group.btn-group-justified
+  - if can?(:edit, answer)  
+    = link_to 'Edit', '', class: 'edit-answer-link btn btn-default', data: { answer_id: answer.id }
+    = link_to 'Delete', answer, class: 'btn btn-default', method: :delete, remote: true
+  - if can?(:set_best, answer)
+    = link_to 'Best', set_best_answer_path(answer), class: "btn btn-default", remote: true, method: :patch
+    

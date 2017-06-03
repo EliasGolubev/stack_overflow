@@ -1,11 +1,5 @@
 - if answer.best?
   .row id="best-label-answer-#{answer.id}"
-      span class="label label-success" best
-- if can?(:edit, answer)
-  .row
-    = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
-  .row
-    =link_to 'Delete', answer, method: :delete, remote: true
-.row
-  - if can?(:set_best, answer)
-    = link_to 'Best', set_best_answer_path(answer), class: "btn btn-default", remote: true, method: :patch
+    .col-xs-12
+      span class="label label-success lb-md" best
+  br

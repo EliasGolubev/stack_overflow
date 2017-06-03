@@ -1,11 +1,4 @@
 -if @answer.best == true
   .row id="best-label-answer-#{@answer.id}"
-    span class="label label-success" best
--if gon.user_id == @answer.user_id
-  .row
-    a class="edit-answer-link" data-answer-id="#{@answer.id}" Edit
-  .row
-    a data-remote="true" rel="nofollow" data-method="delete" href="/answers/#{@answer.id}" Delete
--if gon.user_id == @question_user_id
-  .row
-    a class='btn btn-default' data-remote="true" rel="nofollow" data-method="patch" href="/answers/#{@answer.id}/set_best" Best
+    span class="label label-success lb-md" best
+  br

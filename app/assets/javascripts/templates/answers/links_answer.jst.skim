@@ -1,0 +1,6 @@
+.btn-group.btn-group-justified
+  -if gon.user_id == @answer.user_id
+    a class="edit-answer-link btn btn-default" data-answer-id="#{@answer.id}" Edit
+    a class="btn btn-default" data-remote="true" rel="nofollow" data-method="delete" href="/answers/#{@answer.id}" Delete
+  -if gon.user_id == @question_user_id
+    a class='btn btn-default' data-remote="true" rel="nofollow" data-method="patch" href="/answers/#{@answer.id}/set_best" Best

@@ -8,7 +8,7 @@
 
   .form-group
     =f.label :body, 'Question text'
-    =f.text_area :body, class: "form-control", rows: 15
+    =f.trix_editor :body, class: "editor"
 
   .form-group
       = f.fields_for :attachments, @question.attachments.build do |a|

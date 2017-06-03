@@ -28,7 +28,7 @@ feature 'User create question', %q{
     expect(current_path).to eq new_question_path
   end 
 
-  scenario 'Logged user fill title and body question' do
+  scenario 'Logged user fill title and body question', js: true do
     sign_in(user)
 
     visit new_question_path
