@@ -1,14 +1,14 @@
 - if can?(:vote, answer)
   .answer-vote id="answer-vote-#{answer.id}"
     .row
-      .col-xs-12.col-sm-1
-        p
+      .btn-group.btn-group-justified
+        .col-xs-12.col-sm-4
           .col-xs-3.col-sm-12.text-center
-            = link_to 'UP', polymorphic_path([:positive_vote, answer]), method: :post, class: 'answer-vote-action', remote:true, data: {type: :json}
+            = link_to 'UP', polymorphic_path([:positive_vote, answer]), method: :post, class: 'answer-vote-action btn btn-success btn-block', remote:true, data: {type: :json}
           .col-xs-3.col-sm-12.text-center
             .answer_rating_vote id="answer-#{answer.id}-rating"
-              = answer.rating
+              h4  = answer.rating
           .col-xs-3.col-sm-12.text-center
-            = link_to 'DOWN', polymorphic_path([:negative_vote, answer]), method: :post, class: 'answer-vote-action', remote: true, data: {type: :json}
+            = link_to 'DOWN', polymorphic_path([:negative_vote, answer]), method: :post, class: 'answer-vote-action btn btn-margin-buttom btn-success btn-block', remote: true, data: {type: :json}
           .col-xs-3.col-sm-12.text-center
-            = link_to 'Re-Vote', polymorphic_path([:re_vote, answer]), method: :delete, class: 'answer-vote-action', remote:true, data: {type: :json}
+            = link_to 'Re-Vote', polymorphic_path([:re_vote, answer]), method: :delete, class: 'answer-vote-action btn btn-danger btn-block', remote:true, data: {type: :json}

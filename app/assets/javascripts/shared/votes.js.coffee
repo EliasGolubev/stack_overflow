@@ -2,7 +2,7 @@ question_rating_vote = (e) ->
   $('.question-vote-action').bind 'ajax:success', (e, data, status, xhr) ->
     vote = $.parseJSON(xhr.responseText)
     $('.question_rating_errors').removeClass('alert alert-info').html('')
-    $('.question_rating_vote').html(vote.rating)
+    $('.question_rating_vote').html("<h4>" + vote.rating + "</h4>")
     return undefined
 
   $('.question-vote-action').bind 'ajax:error', (e, xhr, status, error) ->
@@ -16,7 +16,7 @@ answer_rating_vote = (e) ->
   $('.answer-vote-action').bind 'ajax:success', (e, data, status, xhr) ->
     vote = $.parseJSON(xhr.responseText)
     $("#answer-#{vote.id}-rating-errors").removeClass('alert alert-info').html('')
-    $("#answer-#{vote.id}-rating").html(vote.rating)
+    $("#answer-#{vote.id}-rating").html("<h4>" + vote.rating + "</h4>")
     return undefined
 
   $('.answer-vote-action').bind 'ajax:error', (e, xhr, status, error) ->

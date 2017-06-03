@@ -4,6 +4,7 @@
       .panel.panel-primary
         .panel-body
           .col-xs-12.col-md-11
+            ==JST["templates/answers/best_answer"](answer: @answer)
             .answer_rating_errors id="answer-#{@answer.id}-rating-errors"
             .answer-body id="answer-show-body-#{@answer.id}"
               =@answer.body
@@ -17,11 +18,11 @@
                   -if gon.user_id == @answer.user_id
                     .col-xs-2.pull-right
                       a href="/attachments/#{attachment.id}" data-remote="true" data-method="delete" rel="nofollow" Delete            
-            ==JST["templates/answers/edit_answer_form"](answer: @answer)  
-          .col-xs-12.col-md-1          
-            ==JST["templates/answers/best_answer"](answer: @answer, question_user_id: @question_user_id)
+            ==JST["templates/answers/edit_answer_form"](answer: @answer) 
+            hr 
+            ==JST["templates/answers/links_answer"](answer: @answer, question_user_id: @question_user_id)
   -if gon.user_id && gon.user_id != @answer.user_id
-    .col-xs-12.col-md-1
+    .col-xs-12.col-md-4
       ==JST["templates/answers/vote"](answer: @answer, rating: @rating)
   .row
     ==JST["templates/comment"](commentable_id: @answer.id, commentable_klass: @commentable_klass)

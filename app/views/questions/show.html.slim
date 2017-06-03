@@ -15,12 +15,12 @@
                 hr
                 .attachments-question-files
                   = render 'attachments/attachments_show', resource: @question              
-            .col-xs-2.col-md-1
               - if can?(:edit, @question)
+                hr
                 = render 'links', question: @question
 
       =render 'question_edit', question: @question
-  .col-xs-12.col-md-1
+  .col-xs-12.col-md-4
     =render 'votes/question_vote', question: @question
   .row
     .col-xs-12.col-sm-8.answer-comments-block id="comments-#{@question.id}"
@@ -34,3 +34,4 @@
 .row
   .col-xs-12.col-sm-8
     =render 'answers/answer_new', question: @question, answer: @answer
+
