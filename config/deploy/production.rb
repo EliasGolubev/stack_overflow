@@ -29,7 +29,8 @@ role :db,  %w{deployer@77.244.213.135}
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
 
-set :rails_end, :production
+set :rails_env, :production
+set :stage, :production
 
 # Custom SSH Options
 # ==================
