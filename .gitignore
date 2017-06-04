@@ -49,6 +49,7 @@ certs/
 dump.rdb
 config/*.sphinx.conf
 db/sphinx
+.env
 
 config/database.yml
 
