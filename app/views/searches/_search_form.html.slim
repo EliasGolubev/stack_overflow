@@ -1,5 +1,7 @@
-.form-group
-  = form_tag search_path, method: :get do
+= form_tag search_path, method: :get, class: "navbar-form navbar-right" do
+  .form-group
     = select_tag 'resourse', options_for_select(Search::RESOURSES, params[:resourse]), class: "form-control indents"
+  .form-group
     = search_field_tag :query, params[:query], class: "form-control indents"
+  .form-group
     = submit_tag 'Find', class: 'btn btn-warning indents'

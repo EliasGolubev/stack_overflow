@@ -12,14 +12,14 @@ nav.navbar.navbar-default.navbar-fixed-top
       ul.nav.navbar-nav
         -if can?(:create, Question)
           li=link_to 'New question', new_question_path
-      .navbar-form.navbar-right
-        = render 'searches/search_form'
+        
       ul.nav.navbar-nav.navbar-right        
         -if user_signed_in?
           li=link_to 'Sign out', destroy_user_session_path, method: :delete
         -else
           li=link_to 'Sign in', new_user_session_path
           li=link_to 'Sign up', new_user_registration_path
+      = render 'searches/search_form'
 
 
       
