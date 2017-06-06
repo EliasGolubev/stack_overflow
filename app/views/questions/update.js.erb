@@ -8,7 +8,7 @@ $(document).ready(function(){
     <% else %>
         $('.errors-question').removeClass('alert alert-info').html('');
         $('.show-question-title').html('<%= @question.title %>');
-        $('.question-show-body').html('<%= @question.body.html_safe %>');
+        $('.question-show-body').html("<%= j render partial: 'render_question', locals:{question: @question} %>");
         $('.question-show').show();
         $('.question-edit').hide();
     <% end %>
