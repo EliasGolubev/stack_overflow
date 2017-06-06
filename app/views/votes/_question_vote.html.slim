@@ -1,11 +1,13 @@
 - if can?(:vote, @question)
-  .row
-    .question-vote.btn-group.btn-group-justified
-      .col-xs-12.col-sm-4
+.row
+  .question-vote.btn-group.btn-group-justified
+    .col-xs-12.col-sm-4
+      - if can?(:vote, @question)
         .col-xs-3.col-sm-12.text-center
           = link_to 'UP', polymorphic_path([:positive_vote, @question]), method: :post, class: 'question-vote-action btn btn-success btn-block', remote:true, data: {type: :json}
-        .col-xs-3.col-sm-12.question_rating_vote.text-center
-            h4 = @question.rating
+      .col-xs-3.col-sm-12.question_rating_vote.text-left
+          <h4><span class="glyphicon glyphicon-heart">&nbsp;#{@question.rating}</span></h4> 
+      - if can?(:vote, @question)
         .col-xs-3.col-sm-12.text-center
           = link_to 'DOWN', polymorphic_path([:negative_vote, @question]), method: :post, class: 'question-vote-action btn btn-margin-buttom btn-success btn-block', remote: true, data: {type: :json}
         .col-xs-3.col-sm-12.text-center
