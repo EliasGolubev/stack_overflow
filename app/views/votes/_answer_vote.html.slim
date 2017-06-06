@@ -1,13 +1,14 @@
-- if can?(:vote, answer)
-  .answer-vote id="answer-vote-#{answer.id}"
-    .row
-      .btn-group.btn-group-justified
-        .col-xs-12.col-sm-4
+.answer-vote id="answer-vote-#{answer.id}"
+  .row
+    .btn-group.btn-group-justified
+      .col-xs-12.col-sm-4
+        - if can?(:vote, answer)
           .col-xs-3.col-sm-12.text-center
             = link_to 'UP', polymorphic_path([:positive_vote, answer]), method: :post, class: 'answer-vote-action btn btn-success btn-block', remote:true, data: {type: :json}
-          .col-xs-3.col-sm-12.text-center
-            .answer_rating_vote id="answer-#{answer.id}-rating"
-              h4  = answer.rating
+        .col-xs-3.col-sm-12.text-left
+          .answer_rating_vote id="answer-#{answer.id}-rating"
+            <h4><span class="glyphicon glyphicon-heart">&nbsp;#{answer.rating}</span></h4> 
+        - if can?(:vote, answer)
           .col-xs-3.col-sm-12.text-center
             = link_to 'DOWN', polymorphic_path([:negative_vote, answer]), method: :post, class: 'answer-vote-action btn btn-margin-buttom btn-success btn-block', remote: true, data: {type: :json}
           .col-xs-3.col-sm-12.text-center
