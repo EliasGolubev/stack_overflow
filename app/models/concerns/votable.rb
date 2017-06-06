@@ -8,6 +8,8 @@ module Votable
 
   included do
     has_many :votes, dependent: :destroy, as: :votable
+
+    default_scope -> { order('best DESC') }
   end
 
   def rating
